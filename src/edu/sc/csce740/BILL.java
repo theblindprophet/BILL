@@ -32,8 +32,8 @@ package edu.sc.csce740;
  */
 
 import java.util.List;
-import edu.sc.csce740.apples.Bill;
-import edu.sc.csce740.apples.StudentRecord;
+import edu.sc.csce740.model.Bill;
+import edu.sc.csce740.model.StudentRecord;
 
 /**
  * Your implementation of this interface must be named BILL
