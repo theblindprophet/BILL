@@ -1,4 +1,4 @@
-package edu.sc.csce740;
+package main.java.edu.sc.csce740;
 
 /**
  * BILL
@@ -32,20 +32,36 @@ package edu.sc.csce740;
  */
 
 import java.util.List;
-import edu.sc.csce740.model.Bill;
-import edu.sc.csce740.model.StudentRecord;
+import main.java.edu.sc.csce740.model.Bill;
+import main.java.edu.sc.csce740.model.StudentRecord;
+import main.java.edu.sc.csce740.model.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 /**
  * Your implementation of this interface must be named BILL
  */
 public class BILL implements BILLIntf {
+	
+	// Global variables
+	List<StudentRecord> studentRecords;
+	List<User> users;
+
     /**
      * Loads the list of system usernames and permissions.
      * @param usersFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadUsers(String usersFile) throws Exception {
-    	
+    public void loadUsers(String usersFile) throws FileNotFoundException, NullPointerException {
+    	ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource(usersFile).getFile());
+			users = 
+    		new Gson().fromJson(
+    			new FileReader(file), new TypeToken<List<User>>(){}.getType()
+    		);
     }
 
     /**
@@ -53,8 +69,13 @@ public class BILL implements BILLIntf {
      * @param recordsFile the filename of the transcripts file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadRecords(String recordsFile) throws Exception {
-    	
+    public void loadRecords(String recordsFile) throws FileNotFoundException, NullPointerException {
+    		ClassLoader classLoader = getClass().getClassLoader();
+    		File file = new File(classLoader.getResource(recordsFile).getFile());
+        	studentRecords = 
+        		new Gson().fromJson(
+        			new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
+        		);
     }
 
     /**

@@ -4,7 +4,7 @@
  *  Last Modified: 16 November 2017
  */
 
-package edu.sc.csce740.model;
+package main.java.edu.sc.csce740.model;
 
 public class User {
 	

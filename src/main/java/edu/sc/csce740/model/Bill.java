@@ -4,7 +4,8 @@
  *  Last Modified: 16 November 2017
  */
 
-package edu.sc.csce740.model;
+package main.java.edu.sc.csce740.model;
+import com.google.gson.Gson;
 
 public class Bill {
 	

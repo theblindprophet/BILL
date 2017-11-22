@@ -4,14 +4,14 @@
  *  Last Modified: 16 November 2017
  */
 
-package edu.sc.csce740.model;
+package main.java.edu.sc.csce740.model;
 
 public class StudentDemographics {
 
 	// Class variables
 	private String id = "";
-	private String firstname = "";
-	private String lastname = "";
+	private String firstName = "";
+	private String lastName = "";
 	private String phone = "";
 	private String emailAddress = "";
 	private String addressStreet = "";
@@ -47,7 +47,7 @@ public class StudentDemographics {
 	 * @return
 	 */
 	public String getFirstname() {
-		return firstname;
+		return firstName;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class StudentDemographics {
 	 * @param firstname
 	 */
 	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+		this.firstName = firstname;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class StudentDemographics {
 	 * @return
 	 */
 	public String getLastname() {
-		return lastname;
+		return lastName;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class StudentDemographics {
 	 * @param lastname
 	 */
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		this.lastName = lastname;
 	}
 
 	/**

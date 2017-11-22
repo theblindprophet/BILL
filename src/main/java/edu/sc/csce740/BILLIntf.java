@@ -28,12 +28,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package edu.sc.csce740;
+package main.java.edu.sc.csce740;
 
 import java.util.List;
 
-import edu.sc.csce740.model.Bill;
-import edu.sc.csce740.model.StudentRecord;
+import main.java.edu.sc.csce740.model.Bill;
+import main.java.edu.sc.csce740.model.StudentRecord;
 
 /**
  * This defines the interface to the BILL back-end
