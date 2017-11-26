@@ -39,10 +39,12 @@ import main.java.edu.sc.csce740.model.AVPS;
 import main.java.edu.sc.csce740.model.Action;
 import main.java.edu.sc.csce740.model.AdminRightsException;
 import main.java.edu.sc.csce740.model.Bill;
+import main.java.edu.sc.csce740.model.Billing;
 import main.java.edu.sc.csce740.model.DHCS;
 import main.java.edu.sc.csce740.model.GetRecordException;
-import main.java.edu.sc.csce740.model.InvalidUserNameException;
+import main.java.edu.sc.csce740.model.InvalidUserIdException;
 import main.java.edu.sc.csce740.model.StudentRecord;
+import main.java.edu.sc.csce740.model.Transaction;
 import main.java.edu.sc.csce740.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -91,17 +93,17 @@ public class BILL implements BILLIntf {
      * @param userId  the id of the user to log in.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
-    public void logIn(String userId) throws InvalidUserNameException {
+    public void logIn(String userId) throws InvalidUserIdException {
     	try{
-	    	if(AVPS.hasPermission_LogIn())
+	    	if(AVPS.hasPermission_LogIn() && _DHCS.getUser(userId) != null)
 	    	{
 	        	User newUser = _DHCS.getUser(userId);
 	        	DHCS.setCurrentUser(newUser);
 	    	}else{
-	    		throw new InvalidUserNameException();
+	    		throw new InvalidUserIdException();
 	    	}
     	}
-    	catch(InvalidUserNameException e)
+    	catch(InvalidUserIdException e)
     	{
     		System.out.println(userId + " , is not a valid username");
     	}
@@ -119,10 +121,10 @@ public class BILL implements BILLIntf {
 	    	{
 	        	DHCS.setCurrentUser(null);
 	    	}else{
-	    		throw new InvalidUserNameException();
+	    		throw new InvalidUserIdException();
 	    	}
     	}
-    	catch(InvalidUserNameException e)
+    	catch(InvalidUserIdException e)
     	{
     		System.out.println("No user logged in");
     	}
@@ -207,9 +209,11 @@ public class BILL implements BILLIntf {
             throws Exception {
     	Action editRecordAction = Action.EditRecord;
     	try{
-	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), editRecordAction))
+	    	if(AVPS.hasPermission(_DHCS.getUser(userId), editRecordAction))
 	    	{
-	    		
+
+	    		_DHCS.writeRecord(userId, record, permanent);
+
 	    	}else{
 	    		throw new AdminRightsException();
 	    	}
@@ -247,8 +251,25 @@ public class BILL implements BILLIntf {
      */
     public Bill viewCharges(String userId, int startMonth, int startDay, int startYear,
                             int endMonth, int endDay, int endYear) throws Exception {
-    		Bill apples = new Bill();
-		return apples;
+		
+		Action viewChargesAction = Action.ViewCharges;
+    	try{
+	    	if(AVPS.hasPermission(_DHCS.getUser(userId), viewChargesAction))
+	    	{
+	    		StudentRecord record = _DHCS.getRecord(userId);
+	    		Transaction[] transArray = _DHCS.getCharges(userId, startMonth, startDay, startYear, endMonth, endDay, endYear);
+	        	Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), Billing.calculateBalance(transArray), transArray);
+	    
+	    		return charges;
+	    	}else{
+	    		throw new AdminRightsException();
+	    	}
+    	}
+    	catch(AdminRightsException e)
+    	{
+    		System.out.println("User is not a valid Admin for this student");
+    		return null;
+    	}
     }
 
     /**

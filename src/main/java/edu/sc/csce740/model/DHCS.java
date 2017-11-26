@@ -1,6 +1,9 @@
 package main.java.edu.sc.csce740.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DHCS {
 
@@ -39,18 +42,48 @@ public class DHCS {
 		DHCS.currentUser = currentUser;
 	}
 
-	public User getUser(String userId) {
-		//WriteThis
-		return null;
+	public User getUser(String userId) throws InvalidUserIdException
+	{
+		try
+		{
+			for(User aUser : this.users)
+			{
+				if(aUser.getId().equals(userId))
+				{
+					return aUser;
+				}
+			}
+			throw new InvalidUserIdException();
+		}
+		catch(InvalidUserIdException e)
+		{
+			System.out.println("Invalid User Id");
+			return null;
+		}
 	}
 	
 	private void initialize()
 	{
 		
 	}
-	private void updateInternalRecord(StudentRecord record)
+	
+	private void updateInternalRecord(String userId, StudentRecord record)
 	{
-		
+		try
+		{
+			for(StudentRecord aRecord : this.studentRecords)
+			{
+				if(aRecord.getStudent().getId().equals(userId))
+				{
+					aRecord = record;
+				}
+			}
+			throw new InvalidUserIdException();
+		}
+		catch(InvalidUserIdException e)
+		{
+			System.out.println("Invalid User Id");
+		}
 	}
 	private String readFile(String fileName) throws Exception
 	{
@@ -61,13 +94,21 @@ public class DHCS {
 	{
 		
 	}
-	public void writeRecord(String userID, StudentRecord record) throws Exception
+	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws Exception
 	{
 		
+		
+		if(permanent)
+		{
+	
+		}else{
+			this.updateInternalRecord(userId, record);
+		}
 	}
 	public StudentRecord getRecord(String userId) throws GetRecordException
 	{
-		try{
+		try
+		{
 			for(StudentRecord aRecord : studentRecords)
 			{
 				if(aRecord.getStudent().getId().equals(userId))
@@ -82,12 +123,28 @@ public class DHCS {
 			System.out.println("No Record for this Id");
 			return null;
 		}
-
-		
 	}
-	public Transaction[] getCharges(String userId, int startMonth, int startDay, int startYear, int endMonth, int endDay, int endYear)
+	public Transaction[] getCharges(String userId, int startMonth, int startDay, int startYear, int endMonth, int endDay, int endYear) throws ParseException, GetRecordException
 	{
-		return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date endDate = sdf.parse(endYear + "-" + endMonth + "-" + endDay);
+		Date startDate = sdf.parse(startYear + "-" + startMonth + "-" + startDay);
+		Transaction[] validTransArray = new Transaction[0];
+		
+		Transaction[] transList = this.getRecord(userId).getTransactions();
+		ArrayList<Transaction> validTrans = new ArrayList<Transaction>();
+		for(int i = 0; i < transList.length; i++)
+		{
+			Date transDate = sdf.parse(transList[i].getTransactionYear() + "-" + transList[i].getTransactionMonth() 
+										+ "-" + transList[i].getTransactionDay());
+			
+			if(transDate.compareTo(endDate) < 0 && transDate.compareTo(startDate) > 0)
+			{
+				validTrans.add(transList[i]);
+			}
+		}		
+		validTransArray = validTrans.toArray(validTransArray);
+		return validTransArray;
 		
 	}
 

@@ -23,6 +23,15 @@ public class Bill {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Bill(StudentDemographics student, String college, String classStatus, Double balance, Transaction[] transactions){
+		// TODO Auto-generated constructor stub
+		this.student = student;
+		this.college = college;
+		this.classStatus = classStatus;
+		this.balance = balance;
+		this.transactions = transactions;
+	}
+	
 	/**
 	 * 
 	 * @return
