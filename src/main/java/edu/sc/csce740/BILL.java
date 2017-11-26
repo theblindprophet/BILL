@@ -32,7 +32,12 @@ package main.java.edu.sc.csce740;
  */
 
 import java.util.List;
+
+import main.java.edu.sc.csce740.model.AVPS;
+import main.java.edu.sc.csce740.model.Action;
 import main.java.edu.sc.csce740.model.Bill;
+import main.java.edu.sc.csce740.model.DHCS;
+import main.java.edu.sc.csce740.model.InvalidUserNameException;
 import main.java.edu.sc.csce740.model.StudentRecord;
 import main.java.edu.sc.csce740.model.User;
 import com.google.gson.Gson;
@@ -47,8 +52,7 @@ import java.io.FileNotFoundException;
 public class BILL implements BILLIntf {
 	
 	// Global variables
-	List<StudentRecord> studentRecords;
-	List<User> users;
+	DHCS _DHCS= new DHCS();
 
     /**
      * Loads the list of system usernames and permissions.
@@ -58,10 +62,10 @@ public class BILL implements BILLIntf {
     public void loadUsers(String usersFile) throws FileNotFoundException, NullPointerException {
     	ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(usersFile).getFile());
-			users = 
-    		new Gson().fromJson(
-    			new FileReader(file), new TypeToken<List<User>>(){}.getType()
-    		);
+			_DHCS.setUsers(new Gson().fromJson(
+	    			new FileReader(file), new TypeToken<List<User>>(){}.getType()
+		    		)) ;
+    		
     }
 
     /**
@@ -72,10 +76,10 @@ public class BILL implements BILLIntf {
     public void loadRecords(String recordsFile) throws FileNotFoundException, NullPointerException {
     		ClassLoader classLoader = getClass().getClassLoader();
     		File file = new File(classLoader.getResource(recordsFile).getFile());
-        	studentRecords = 
-        		new Gson().fromJson(
+        	_DHCS.setStudentRecords(new Gson().fromJson(
         			new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
-        		);
+        		));  
+        		
     }
 
     /**
@@ -83,18 +87,41 @@ public class BILL implements BILLIntf {
      * @param userId  the id of the user to log in.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
-    public void logIn(String userId) throws Exception {
-    	AVPS auth = new AVPS();
-    	auth.logIn(userId);
+    public void logIn(String userId) throws InvalidUserNameException {
+    	try{
+	    	if(AVPS.hasPermission_LogIn())
+	    	{
+	        	User newUser = _DHCS.getUser(userId);
+	        	DHCS.setCurrentUser(newUser);
+	    	}else{
+	    		throw new InvalidUserNameException();
+	    	}
+    	}
+    	catch(InvalidUserNameException e)
+    	{
+    		System.out.println(userId + " , is not a valid username");
+    	}
     }
 
     /**
      * Closes the current session, logs the user out, and clears any session data.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
-    public void logOut() throws Exception {
-    	AVPS auth = new AVPS();
-    	auth.logOut();
+    public void logOut(){
+    	Action logOutAction = Action.LogOut;
+
+    	try{
+	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), logOutAction))
+	    	{
+	        	DHCS.setCurrentUser(null);
+	    	}else{
+	    		throw new InvalidUserNameException();
+	    	}
+    	}
+    	catch(InvalidUserNameException e)
+    	{
+    		System.out.println("No user logged in");
+    	}
     }
 
     /**
@@ -169,8 +196,7 @@ public class BILL implements BILLIntf {
      * SEE NOTE IN CLASS HEADER.
      */
     public Bill viewCharges(String userId, int startMonth, int startDay, int startYear,
-                            int endMonth, int endDay, int endYear)
-            throws Exception {
+                            int endMonth, int endDay, int endYear) throws Exception {
     		Bill apples = new Bill();
 		return apples;
     }

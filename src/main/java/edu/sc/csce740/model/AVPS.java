@@ -4,30 +4,14 @@ package main.java.edu.sc.csce740.model;
 public class AVPS 
 {
 	
-	
-	public AVPS()
-	{
-		
-	}
-	
-	public User logIn(String userId)
-	{
-		DHCS controller = new DHCS();
-		User loggedInUser = controller.getUser(userId);
-		DHCS.setCurrentUser(loggedInUser);
-		return loggedInUser;
-	}
-	
-	public void logOut()
-	{
-		DHCS.setCurrentUser(null);
-	}
-	
-	public boolean hasPermission(User requestee, Action action)
+
+	public static boolean hasPermission(User requestee, Action action)
 	{
 		
 		switch(action)
 		{
+			case LogOut:
+				return hasPermission_LogOut(requestee);
 			case GetStudentIds:
 				return hasPermission_GetStudentIds(requestee);
 			case GetRecord:
@@ -44,7 +28,25 @@ public class AVPS
 		return false;
 	}
 
-	private boolean hasPermission_ApplyPayment(User requestee) 
+	public static boolean hasPermission_LogIn() {
+		if(DHCS.getCurrentUser() == null)
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean hasPermission_LogOut(User requestee) {
+		if(DHCS.getCurrentUser() != null)
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean hasPermission_ApplyPayment(User requestee) 
 	{
 		if((DHCS.getCurrentUser().getCollege().equals(requestee.getCollege()) && DHCS.getCurrentUser().getRole().equals("ADMIN")) || DHCS.getCurrentUser().getId().equals(requestee.getId()))
 		{
@@ -54,7 +56,7 @@ public class AVPS
 		}
 	}
 
-	private boolean hasPermission_ViewCharges(User requestee) 
+	private static boolean hasPermission_ViewCharges(User requestee) 
 	{
 		if((DHCS.getCurrentUser().getCollege().equals(requestee.getCollege()) && DHCS.getCurrentUser().getRole().equals("ADMIN")) || DHCS.getCurrentUser().getId().equals(requestee.getId()))
 		{
@@ -64,7 +66,7 @@ public class AVPS
 		}
 	}
 
-	private boolean hasPermission_GenerateBill(User requestee) 
+	private static boolean hasPermission_GenerateBill(User requestee) 
 	{
 		if((DHCS.getCurrentUser().getCollege().equals(requestee.getCollege()) && DHCS.getCurrentUser().getRole().equals("ADMIN")) || DHCS.getCurrentUser().getId().equals(requestee.getId()))
 		{
@@ -74,7 +76,7 @@ public class AVPS
 		}
 	}
 
-	private boolean hasPermission_EditRecord(User requestee) 
+	private static boolean hasPermission_EditRecord(User requestee) 
 	{
 		if(DHCS.getCurrentUser().getCollege().equals(requestee.getCollege()) && DHCS.getCurrentUser().getRole().equals("ADMIN"))
 		{
@@ -84,7 +86,7 @@ public class AVPS
 		}
 	}
 
-	private boolean hasPermission_GetRecord(User requestee) 
+	private static boolean hasPermission_GetRecord(User requestee) 
 	{
 		if((DHCS.getCurrentUser().getCollege().equals(requestee.getCollege()) && DHCS.getCurrentUser().getRole().equals("ADMIN")) || DHCS.getCurrentUser().getId().equals(requestee.getId()))
 		{
@@ -94,7 +96,7 @@ public class AVPS
 		}
 	}
 
-	private boolean hasPermission_GetStudentIds(User requestee) 
+	private static boolean hasPermission_GetStudentIds(User requestee) 
 	{
 		if(DHCS.getCurrentUser().getRole().equals("ADMIN"))
 		{
