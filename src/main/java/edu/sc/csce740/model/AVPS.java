@@ -13,7 +13,7 @@ public class AVPS
 			case LogOut:
 				return hasPermission_LogOut(requestee);
 			case GetStudentIds:
-				return hasPermission_GetStudentIds(requestee);
+				return hasPermission_GetStudentIds();
 			case GetRecord:
 				return hasPermission_GetRecord(requestee);
 			case EditRecord:
@@ -96,7 +96,7 @@ public class AVPS
 		}
 	}
 
-	private static boolean hasPermission_GetStudentIds(User requestee) 
+	private static boolean hasPermission_GetStudentIds() 
 	{
 		if(DHCS.getCurrentUser().getRole().equals("ADMIN"))
 		{

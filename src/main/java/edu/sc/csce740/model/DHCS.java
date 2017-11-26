@@ -65,9 +65,24 @@ public class DHCS {
 	{
 		
 	}
-	public StudentRecord getRecord(String userID) throws Exception
+	public StudentRecord getRecord(String userId) throws GetRecordException
 	{
-		return null;
+		try{
+			for(StudentRecord aRecord : studentRecords)
+			{
+				if(aRecord.getStudent().getId().equals(userId))
+				{
+					return aRecord;
+				}
+			}
+			throw new GetRecordException();
+		}
+		catch(GetRecordException e)
+		{
+			System.out.println("No Record for this Id");
+			return null;
+		}
+
 		
 	}
 	public Transaction[] getCharges(String userId, int startMonth, int startDay, int startYear, int endMonth, int endDay, int endYear)

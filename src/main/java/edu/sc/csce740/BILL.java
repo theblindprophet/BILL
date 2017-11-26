@@ -1,5 +1,7 @@
 package main.java.edu.sc.csce740;
 
+import java.util.ArrayList;
+
 /**
  * BILL
  * Implementation for the BILL top-level API.
@@ -35,8 +37,10 @@ import java.util.List;
 
 import main.java.edu.sc.csce740.model.AVPS;
 import main.java.edu.sc.csce740.model.Action;
+import main.java.edu.sc.csce740.model.AdminRightsException;
 import main.java.edu.sc.csce740.model.Bill;
 import main.java.edu.sc.csce740.model.DHCS;
+import main.java.edu.sc.csce740.model.GetRecordException;
 import main.java.edu.sc.csce740.model.InvalidUserNameException;
 import main.java.edu.sc.csce740.model.StudentRecord;
 import main.java.edu.sc.csce740.model.User;
@@ -138,10 +142,31 @@ public class BILL implements BILLIntf {
      *      college belonging to the current user
      * @throws Exception is the current user is not an admin.
      */
-    public List<String> getStudentIDs() throws Exception {
-    		List<String> apples = null;
-    		apples.add("apples");
-    		return apples;
+    public List<String> getStudentIDs() throws AdminRightsException {		
+    		Action getStudentIdsAction = Action.GetStudentIds;
+        	try{
+    	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), getStudentIdsAction))
+    	    	{
+    	    		ArrayList<User> userList = _DHCS.getUsers();
+    	    		ArrayList<String> userIdList = new ArrayList<String>();
+    	    		for(User aUser : userList)
+    	    		{
+    	    			if(DHCS.getCurrentUser().getCollege().equals(aUser.getCollege()))
+    	    			{
+    	    				userIdList.add(aUser.getId());
+    	    			}
+    	    		}
+    	        	return userIdList;
+    	    	}else{
+    	    		throw new AdminRightsException();
+    	    	}
+        	}
+        	catch(AdminRightsException e)
+        	{
+        		System.out.println("User is not an admin");
+    			return null;
+        	}
+
     }
 
     /**
@@ -152,8 +177,21 @@ public class BILL implements BILLIntf {
      *      CLASS HEADER.
      */
     public StudentRecord getRecord(String userId) throws Exception {
-    		StudentRecord apples = new StudentRecord();
-    		return apples;
+    	Action getRecordAction = Action.GetRecord;
+    	try{
+	    	if(AVPS.hasPermission(_DHCS.getUser(userId), getRecordAction))
+	    	{
+	    		StudentRecord aRecord = _DHCS.getRecord(userId);
+	    		return aRecord;
+	    	}else{
+	    		throw new GetRecordException();
+	    	}
+    	}
+    	catch(GetRecordException e)
+    	{
+    		System.out.println("User does not have correct privledges to get record");
+			return null;
+    	}
     }
 
     /**
@@ -167,7 +205,19 @@ public class BILL implements BILLIntf {
      */
     public void editRecord(String userId, StudentRecord record, Boolean permanent)
             throws Exception {
-    	
+    	Action editRecordAction = Action.EditRecord;
+    	try{
+	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), editRecordAction))
+	    	{
+	    		
+	    	}else{
+	    		throw new AdminRightsException();
+	    	}
+    	}
+    	catch(AdminRightsException e)
+    	{
+    		System.out.println("User is not a valid Admin for this student");
+    	}
     }
 
     /**
