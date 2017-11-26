@@ -131,8 +131,10 @@ public class User {
 	 * 
 	 * @param recordString
 	 */
-	public void parseStudent(String recordString) {
-		
+	public StudentRecord parseStudent(String recordString) {
+		StudentRecord newRecord = new StudentRecord();
+		//TO-DO: Write this
+		return newRecord;
 	}
 
 }

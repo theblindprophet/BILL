@@ -84,7 +84,8 @@ public class BILL implements BILLIntf {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
     public void logIn(String userId) throws Exception {
-    	
+    	AVPS auth = new AVPS();
+    	auth.logIn(userId);
     }
 
     /**
@@ -92,7 +93,8 @@ public class BILL implements BILLIntf {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
     public void logOut() throws Exception {
-    	
+    	AVPS auth = new AVPS();
+    	auth.logOut();
     }
 
     /**
@@ -100,7 +102,7 @@ public class BILL implements BILLIntf {
      * @return  the user id of the user currently using the system.
      */
     public String getUser() {
-    		return "";
+		return DHCS.getCurrentUser().getId();
     }
 
     /**
