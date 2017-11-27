@@ -49,4 +49,9 @@ public class Course {
 	public void setOnline(boolean online) {
 		this.online = online;
 	}	
+	
+	public String toString()
+	{
+		return name + "-" + ID + "-" + numCredits + "-" + online;
+	}
 }

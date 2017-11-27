@@ -4,6 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import main.java.edu.sc.csce740.model.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class DHCS {
 
@@ -91,7 +99,7 @@ public class DHCS {
 		}
 		catch(InvalidUserIdException e)
 		{
-			System.out.println("Invalid User Id");
+			System.out.println("Invalid User Id to update record");
 		}
 	}
 	private String readFile(String fileName) throws Exception
@@ -100,9 +108,22 @@ public class DHCS {
 		
 	}
 	
-	private void writeFile(String fileName, String data) throws Exception
+	private void writeFile(String fileName) throws Exception
 	{
-		
+		Gson gson = new Gson();
+		String json = gson.toJson(this.studentRecords);
+		try {
+			File file = new File(fileName);
+			if (file.exists())
+			{
+			   file.delete();
+			}
+			FileWriter writer = new FileWriter(file);
+			writer.write(json);
+			writer.close();
+		} catch (IOException e) {
+		   e.printStackTrace();
+		}
 	}
 	
 	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws Exception
@@ -112,9 +133,8 @@ public class DHCS {
 		{
 			if(permanent)
 			{
-				this.writeFile(this.recordsFile, record.toString());
 				this.updateInternalRecord(userId, record);
-				
+				this.writeFile(this.recordsFile);
 			}else{
 				this.updateInternalRecord(userId, record);
 			}

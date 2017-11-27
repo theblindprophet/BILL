@@ -335,7 +335,12 @@ public class StudentRecord {
 	 */
 	public String toString() {
 		//TODO
-		return "apples";
+		String recordString = "";
+		recordString = "("+student+")"  + " - " + college + " - " + "("+termBegan+")" + " - " + "("+capstoneEnrolled+")" + " - " + classStatus + " - " + 
+					   gradAssistant + " - " + international + " - " + internationalStatus + " - " + resident + " - " + activeDuty + " - " + 
+					   veteran + " - " + freeTuition + " - " + scholarship + " - " + studyAbroad + " - " + nationalStudentExchange + " - " + 
+					   outsideInsurance + " - " + "("+courses+")" + "("+transactions+")";
+		return recordString;
 	}
 
 

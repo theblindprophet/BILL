@@ -342,7 +342,7 @@ public class Billing {
 		int numHours = 0;
 		if (user != null && user.getRecord() != null && user.getRecord().getCourses() != null) {
 			for (Course course : user.getRecord().getCourses()) {
-				numHours += course.getNumHours();
+				numHours += course.getNumCredits();
 			}
 		}
 		

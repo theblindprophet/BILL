@@ -51,4 +51,8 @@ public class Term {
 		this.year = year;
 	}
 	
+	public String toString()
+	{
+		return semester + "-" + year;
+	}
 }

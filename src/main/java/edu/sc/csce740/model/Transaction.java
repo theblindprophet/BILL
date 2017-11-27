@@ -126,5 +126,9 @@ public class Transaction {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public String toString()
+	{
+		return type + "-" + transactionMonth + "-" + transactionYear + "-" + transactionYear + "-" + amount + "-" + note;
+	}
 
 }
