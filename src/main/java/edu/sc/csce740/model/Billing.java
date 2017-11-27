@@ -214,6 +214,23 @@ public class Billing {
 			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.STUDY_ABROAD_COHORT), Fee.getFeeNote(EnumFee.STUDY_ABROAD_COHORT)));
 		}
 		
+		// International fees
+		if (SR.isInternational()) {
+			
+			// Sponsored or shortterm fees
+			if (SR.getInternationalStatus().equals("SPONSORED")) {
+				chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.INTERNATIONAL_SPONSORED), Fee.getFeeNote(EnumFee.INTERNATIONAL_SPONSORED)));
+			} else if (SR.getInternationalStatus().equals("SHORTTERM")) {
+				chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.INTERNATIONAL_SHORT_TERM), Fee.getFeeNote(EnumFee.INTERNATIONAL_SHORT_TERM)));
+			}
+			
+			// One-time international enrollment fee
+			if (findHistoricalTransaction(SR.getTransactions(), EnumFee.INTERNATIONAL_ENROLLMENT) == null) { 
+				chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.INTERNATIONAL_ENROLLMENT), Fee.getFeeNote(EnumFee.INTERNATIONAL_ENROLLMENT)));
+			}
+			
+			// POSSIBLE TODO: NATIONAL_STUDENT_EXCHANGE_ADMIN. However, Dr. Gay [non-explicitly] stated to ignore this fee https://dropbox.cse.sc.edu/mod/forum/discuss.php?d=139#p306
+		}
 		
 		//////////////////////////////////////////		
 		// Fees related to class status:
