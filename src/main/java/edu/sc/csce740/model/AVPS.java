@@ -170,7 +170,7 @@ public class AVPS
 	{
 		for(int i = 0; i < courses.length; i++)
 		{
-			if(!isNotNull(courses[i].getID()) || !isNotNull(courses[i].getName()) || courses[i].getNumHours() < 0)
+			if(!isNotNull(courses[i].getID()) || !isNotNull(courses[i].getName()) || courses[i].getNumCredits() < 0)
 			{
 				return false;
 			}

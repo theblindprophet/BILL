@@ -137,7 +137,7 @@ public class Billing {
 		int day = today.getDayOfYear();
 		Transaction newPayment = new Transaction("PAYMENT", month, day, year, amount, note);
 		
-		boolean isValidPayment = AVPS.isValidTransactions(newPayment);
+		boolean isValidPayment = AVPS.isValidTransaction(newPayment);
 		try
 		{
 			if(isValidPayment)
