@@ -8,13 +8,13 @@ package main.java.edu.sc.csce740.model;
 public class Course {
 	private String name;
 	private String ID;
-	private int numHours;
+	private int numCredits;
 	private boolean online;
 	
 	public Course() {
 		this.name = "";
 		this.ID = "";
-		this.numHours = -1;
+		this.numCredits = -1;
 		this.online = false;
 	}
 
@@ -34,12 +34,12 @@ public class Course {
 		ID = iD;
 	}
 
-	public int getNumHours() {
-		return numHours;
+	public int getNumCredits() {
+		return numCredits;
 	}
 
-	public void setNumHours(int numHours) {
-		this.numHours = numHours;
+	public void setNumCredits(int numCredits) {
+		this.numCredits = numCredits;
 	}
 
 	public boolean isOnline() {
