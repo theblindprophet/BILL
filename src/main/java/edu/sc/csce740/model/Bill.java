@@ -13,25 +13,20 @@ public class Bill {
 	private StudentDemographics student;
 	private String college = "";
 	private String classStatus = "";
-	private Double balance = 0.0;
 	private Transaction[] transactions;
-
-	/**
-	 * 
-	 */
-	public Bill() {
-		// TODO Auto-generated constructor stub
-	}
 	
-	public Bill(StudentDemographics student, String college, String classStatus, Double balance, Transaction[] transactions){
+	public Bill(StudentDemographics student, String college, String classStatus, Transaction[] transactions){
 		// TODO Auto-generated constructor stub
 		this.student = student;
 		this.college = college;
 		this.classStatus = classStatus;
-		this.balance = balance;
 		this.transactions = transactions;
 	}
 	
+	public double getBalance() {
+		return Billing.calculateBalance(this.transactions);
+	}
+
 	/**
 	 * 
 	 * @return
@@ -78,22 +73,6 @@ public class Bill {
 	 */
 	public void setClassStatus(String classStatus) {
 		this.classStatus = classStatus;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Double getBalance() {
-		return balance;
-	}
-	
-	/**
-	 * 
-	 * @param balance
-	 */
-	public void setBalance(Double balance) {
-		this.balance = balance;
 	}
 	
 	/**

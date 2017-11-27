@@ -251,7 +251,20 @@ public class BILL implements BILLIntf {
      * SEE NOTE IN CLASS HEADER.
      */
     public Bill generateBill(String userId) throws Exception {
-    		Bill bill = new Bill();
+    		Bill bill = null;
+    		
+    		try {
+    			User requestee = _DHCS.getUser(userId);
+    			
+    			if (AVPS.hasPermission(_DHCS.getCurrentUser(), requestee, Action.GenerateBill)) {
+    				bill = Billing.getBill(requestee);
+    			}
+    			else {
+    				throw new Exception("TEST");
+    			}
+    		} catch (Exception e) {
+    			System.out.println("User does not have permission to generate bill.");
+    		}
     		return bill;
     }
 
@@ -277,7 +290,7 @@ public class BILL implements BILLIntf {
 	    	{
 	    		StudentRecord record = _DHCS.getRecord(userId);
 	    		Transaction[] transArray = _DHCS.getCharges(userId, startMonth, startDay, startYear, endMonth, endDay, endYear);
-	        	Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), Billing.calculateBalance(transArray), transArray);
+	        	Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), transArray);
 	    
 	    		return charges;
 	    	}else{

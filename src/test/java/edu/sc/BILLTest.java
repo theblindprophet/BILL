@@ -40,6 +40,15 @@ public class BILLTest {
 		}
 	}
 	
+	@Test
+	public void testGenerateBill() {
+		try {
+			testerClass.generateBill("");
+		} catch (Exception e) {
+			fail("testGenerateBill failed: " + e.getMessage());
+		}
+	}
+	
 	@After
     public void after() {
         System.out.println("@After");

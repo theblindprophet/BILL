@@ -6,101 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Billing {
-
-	
-	
-	
-	// Omitted fees:
-	/*
-	 * Gamecock gateway discount
-	Optional athletic fee
-	Dual enrollment fee
-	Reinstatement fee
-	Post office-related fees
-	Orientation fee
-	Parking
-	*/
-
-	
-	
-	
-	/*
-	 * User
-	 * 
-	 * 
-	 * 	private String id = "";
-	private String firstname = "";
-	private String lastname = "";
-	private String role = "";
-	private String college = "";
-	private StudentRecord record;
-	 * 
-	 * Ex:
-	 * 
-	 *     {
-       "id": "mhunt",
-       "firstName": "Michelle",
-       "lastName": "Hunt",
-       "role": "STUDENT",
-       "college": "ARTS_AND_SCIENCES"
-    },
-    {
-	 * 
-	 * User.StudentRecord
-	 * 
-	 * 	private StudentDemographics student;
-	private String college = "";
-	private Term termBegan;
-	private String classStatus = "";
-	private boolean gradAssistant = false;
-	private boolean international = false;
-	private String internationalStatus = "";
-	private boolean resident = false;
-	private boolean activeDuty = false;
-	private boolean veteran = false;
-	private boolean freeTuition = false;
-	private String scholarshop = "";
-	private String studyAbroad = "";
-	private boolean nationalStudentExchange = false;
-	private boolean outsideInsurance = false;
-	private Course[] courses;
-	private Transaction[] transactions;
-	 * 
-	 * Ex:
-	 * 
-	 *     "student": {
-      "id": "mhunt",
-      "firstName": "Michelle",
-      "lastName": "Hunt",
-      "phone": "999-999-9999",
-      "emailAddress": "mhunt@mailbox.sc.edu",
-      "addressStreet": "221B Baker St.",
-      "addressCity": "Pittsburgh",
-      "addressState": "PA",
-      "addressPostalCode": "26505"
-    },
-    "college": "ARTS_AND_SCIENCES",
-    "termBegan": {
-      "semester": "FALL",
-      "year": 2016
-    },
-    "classStatus": "PHD",
-    "gradAssistant": true,
-    "international": false,
-    "internationalStatus": "NONE",
-    "resident": false,
-    "activeDuty": false,
-    "veteran": false,
-    "freeTuition": false,
-    "scholarship": "NONE",
-    "studyAbroad": "NONE",
-    "nationalStudentExchange": false,
-    "outsideInsurance": false,
-    "courses"
-	 * 
-	 * 
-	 */
-	
 	
 	public static double calculateBalance(Transaction[] transactions)
 	{
@@ -118,12 +23,19 @@ public class Billing {
 		return total;
 	}
 	
+	public static Bill getBill(User user) {
+		return new Bill(user.getRecord().getStudent(), user.getCollege(), user.getRecord().getClassStatus(), calculateCharges(user));
+	}
 	
 	public static Transaction[] calculateCharges(User user) {
 		ArrayList<Transaction> chargeList = new ArrayList<Transaction>();
+		Transaction[] userTrans = user.getRecord().getTransactions();
 		
 		chargeList.addAll(calculateCurrentCharges(user));
-		chargeList.addAll(getPreviousCharges(user.getRecord()));
+		
+		for (Transaction transaction : userTrans) {
+			chargeList.add(transaction);
+		}
 		
 		return (Transaction[]) chargeList.toArray();
 	}
@@ -191,7 +103,7 @@ public class Billing {
 			termNow.setSemester("FALL");
 		}
 		
-		if (SR.getCapstoneEnrolled() != null && SR.getCapstoneEnrolled().termDifference(termNow) <= 3){ // If user has bee
+		if (SR.getCapstoneEnrolled() != null && SR.getCapstoneEnrolled().termDifference(termNow) <= 3){ // If the current term is 3 or less semesters away from the enrollment date 
 			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.CAPSTONE_PER_SEMESTER), Fee.getFeeNote(EnumFee.CAPSTONE_PER_SEMESTER)));
 		}
 		
@@ -319,24 +231,19 @@ public class Billing {
 						
 						switch (SR.getScholarship()) {
 							case "WOODROW":
-								note = Fee.getFeeNote(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION), Fee.getFeeNote(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION)));
 								break;								
 							case "ATHLETIC":
-								note = Fee.getFeeNote(EnumFee.UG_NONRESIDENT_ATHLETICS_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_ATHLETICS_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_ATHLETICS_TUITION), Fee.getFeeNote(EnumFee.UG_NONRESIDENT_ATHLETICS_TUITION)));
 								break;								
 							case "DEPARTMENTAL":
-								note = Fee.getFeeNote(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION), Fee.getFeeNote(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION)));
 								break;
 							case "GENERAL":
-								note = Fee.getFeeNote(EnumFee.UG_NONRESIDENT_GENERAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_GENERAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_GENERAL_TUITION), Fee.getFeeNote(EnumFee.UG_NONRESIDENT_GENERAL_TUITION)));
 								break;								
 							case "SIMS":
-								note = Fee.getFeeNote(EnumFee.UG_NONRESIDENT_SIMS_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_SIMS_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_SIMS_TUITION), Fee.getFeeNote(EnumFee.UG_NONRESIDENT_GENERAL_TUITION)));
 								break;									
 						}
 						
@@ -369,24 +276,19 @@ public class Billing {
 						
 						switch (SR.getScholarship()) {
 							case "WOODROW":
-								note = Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION), Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION)));
 								break;								
 							case "ATHLETIC":
-								note = Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_ATHLETICS_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_ATHLETICS_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_ATHLETICS_TUITION), Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_ATHLETICS_TUITION)));
 								break;								
 							case "DEPARTMENTAL":
-								note = Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION), Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION)));
 								break;
 							case "GENERAL":
-								note = Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION), Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION)));
 								break;								
 							case "SIMS":
-								note = Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION);
-								amount = Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_SIMS_TUITION);
+								chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_SIMS_TUITION), Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION)));
 								break;									
 						}
 						
