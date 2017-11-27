@@ -7,13 +7,13 @@ package main.java.edu.sc.csce740.model;
 
 public class Course {
 	private String name;
-	private String ID;
+	private String id;
 	private int numCredits;
 	private boolean online;
 	
 	public Course() {
 		this.name = "";
-		this.ID = "";
+		this.id = "";
 		this.numCredits = -1;
 		this.online = false;
 	}
@@ -27,11 +27,11 @@ public class Course {
 	}
 
 	public String getID() {
-		return ID;
+		return id;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(String id) {
+		this.id = id;
 	}
 
 	public int getNumCredits() {
@@ -52,6 +52,6 @@ public class Course {
 	
 	public String toString()
 	{
-		return name + "-" + ID + "-" + numCredits + "-" + online;
+		return name + "-" + id + "-" + numCredits + "-" + online;
 	}
 }

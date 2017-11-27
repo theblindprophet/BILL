@@ -42,6 +42,7 @@ import main.java.edu.sc.csce740.model.Bill;
 import main.java.edu.sc.csce740.model.Billing;
 import main.java.edu.sc.csce740.model.DHCS;
 import main.java.edu.sc.csce740.model.GetRecordException;
+import main.java.edu.sc.csce740.model.EditRecordException;
 import main.java.edu.sc.csce740.model.InvalidUserIdException;
 import main.java.edu.sc.csce740.model.StudentRecord;
 import main.java.edu.sc.csce740.model.Transaction;
@@ -58,7 +59,7 @@ import java.io.FileNotFoundException;
 public class BILL implements BILLIntf {
 	
 	// Global variables
-	private DHCS _DHCS= new DHCS();
+	private DHCS _DHCS = new DHCS();
 
     /**
      * Loads the list of system usernames and permissions.
@@ -68,9 +69,9 @@ public class BILL implements BILLIntf {
     public void loadUsers(String usersFile) throws FileNotFoundException, NullPointerException {
     	ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(usersFile).getFile());
-			_DHCS.setUsers(new Gson().fromJson(
-	    			new FileReader(file), new TypeToken<List<User>>(){}.getType()
-		    		)) ;
+		_DHCS.setUsers(new Gson().fromJson(
+	    		new FileReader(file), new TypeToken<List<User>>(){}.getType()
+		));
     		
     }
 
@@ -83,8 +84,8 @@ public class BILL implements BILLIntf {
     		ClassLoader classLoader = getClass().getClassLoader();
     		File file = new File(classLoader.getResource(recordsFile).getFile());
         	_DHCS.setStudentRecords(new Gson().fromJson(
-        			new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
-        		));  
+        		new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
+        	));  
         		
     }
 
@@ -94,49 +95,42 @@ public class BILL implements BILLIntf {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
     public void logIn(String userId) throws InvalidUserIdException {
-    	Action logInAction = Action.LogIn;
+    		Action logInAction = Action.LogIn;
     	
-    	try{
-    		User newUser = _DHCS.getUser(userId);
-    		
-	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logInAction) && newUser != null)
-	    	{
-	        	_DHCS.setCurrentUser(newUser);
-	    	}else{
-	    		throw new InvalidUserIdException();
+	    	try {
+	    		User newUser = _DHCS.getUser(userId);
+	    		
+		    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logInAction) && newUser != null) {
+		        	_DHCS.setCurrentUser(newUser);
+		    	} else {
+		    		throw new InvalidUserIdException();
+		    	}
 	    	}
-    	}
-    	catch(InvalidUserIdException e)
-    	{
-    		System.out.println(userId + " , is not a valid username");
-    	}
-    	catch(Exception e) {
-    		System.out.println("Exception in logIn: " + e.getMessage());
-    	}
+	    	catch(InvalidUserIdException e) {
+	    		throw new InvalidUserIdException();
+	    	} catch(Exception e) {
+	    		System.out.println("Exception in logIn: " + e.getMessage());
+	    	}
     }
 
     /**
      * Closes the current session, logs the user out, and clears any session data.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
-    public void logOut(){
-    	Action logOutAction = Action.LogOut;
+    public void logOut() {
+    		Action logOutAction = Action.LogOut;
 
-    	try{
-	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logOutAction))
-	    	{
-	    		_DHCS.setCurrentUser(null);
-	    	}else{
-	    		throw new InvalidUserIdException();
+	    	try {
+		    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logOutAction)) {
+		    		_DHCS.setCurrentUser(null);
+		    	} else {
+		    		throw new InvalidUserIdException();
+		    	}
+	    	} catch(InvalidUserIdException e) {
+	    		System.out.println("No user logged in");
+	    	} catch(Exception e) {
+	    		System.out.println("Exception in logOut: " + e.getMessage());
 	    	}
-    	}
-    	catch(InvalidUserIdException e)
-    	{
-    		System.out.println("No user logged in");
-    	}
-    	catch(Exception e) {
-    		System.out.println("Exception in logOut: " + e.getMessage());
-    	}
     }
 
     /**
@@ -155,16 +149,14 @@ public class BILL implements BILLIntf {
      */
     public List<String> getStudentIDs() throws AdminRightsException, Exception {		
     		Action getStudentIdsAction = Action.GetStudentIds;
-        	try{
+        	try {
         		User currUser = _DHCS.getCurrentUser();
         		
         		if (currUser != null && currUser.getRole().equals("ADMIN")) {
     	    		ArrayList<User> userList = _DHCS.getUsers();
     	    		ArrayList<String> userIdList = new ArrayList<String>();
-    	    		for(User aUser : userList)
-    	    		{
-    	    			if(AVPS.hasPermission(currUser, aUser, getStudentIdsAction))
-    	    			{
+    	    		for(User aUser : userList) {
+    	    			if(AVPS.hasPermission(currUser, aUser, getStudentIdsAction)) {
     	    				userIdList.add(aUser.getId());
     	    			}
     	    		}
@@ -172,16 +164,13 @@ public class BILL implements BILLIntf {
         		} else {
     	    		throw new AdminRightsException();
         		}
-        	}
-        	catch(AdminRightsException e)
-        	{
+        	} catch(AdminRightsException e) {
         		System.out.println("User is not an admin");
-        	}
-        	catch(Exception e) {
+        		throw new AdminRightsException();
+        	} catch(Exception e) {
         		System.out.println("Exception in getStudentIDs: " + e.getMessage());
+        		throw new Exception();
         	}
-        	
-        	return null;
     }
 
     /**
@@ -204,13 +193,13 @@ public class BILL implements BILLIntf {
     	}
     	catch(GetRecordException e)
     	{
-    		System.out.println("User does not have correct privledges to get record");
+    		System.out.println("User does not have correct priviledges to get record");
+    		throw new GetRecordException();
     	}
     	catch(Exception e) {
     		System.out.println("Exception in getRecord: " + e.getMessage());
+    		throw new Exception();
     	}
-    	
-    	return null;
     }
 
     /**
@@ -237,9 +226,11 @@ public class BILL implements BILLIntf {
     	catch(AdminRightsException e)
     	{
     		System.out.println("User is not a valid Admin for this student");
+    		throw new AdminRightsException();
     	}
-    	catch(Exception e) {
+    	catch(EditRecordException e) {
     		System.out.println("Exception in editRecord: " + e.getMessage());
+    		throw new EditRecordException("Edit Record error: " + e.getMessage());
     	}
     }
 

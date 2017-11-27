@@ -2,6 +2,7 @@ package main.java.edu.sc.csce740.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Arrays;
 
 public class AVPS 
 {
@@ -111,23 +112,70 @@ public class AVPS
 		}
 	}
 	
-	public static boolean validateRecord(StudentRecord record)
+	public static String validateRecord(StudentRecord record)
 	{
-		String validPhone = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";		
-		
 		StudentDemographics aStudent = record.getStudent();
-		if(isNotNull(aStudent.getId()) && isNotNull(aStudent.getFirstname()) && 
-		   isNotNull(aStudent.getLastname()) && aStudent.getPhone().matches(validPhone) && 
-		   isValidEmail(aStudent.getEmailAddress()) &&  isNotNull(aStudent.getAddressCity()) &&
-		   isNotNull(aStudent.getAddressState()) &&  isNotNull(aStudent.getAddressPostalCode()) &&
-		   isNotNull(aStudent.getAddressStreet()) && isValidCollege(record.getCollege()) && 
-		   isValidTerm(record.getTermBegan()) && isValidStatus(record.getClassStatus()) && 
-		   isValidInternationalStatus(record.getInternationalStatus()) && isValidScholarship(record.getScholarship()) &&
-		   isValidStudyAbroad(record.getStudyAbroad()) && isValidCourses(record.getCourses()) &&
-		   isValidTerm(record.getCapstoneEnrolled()) && isValidTransactions(record.getTransactions()))
-			return true;
-		else
-			return false;
+		if(!isNotNull(aStudent.getId())) {
+			return "Null Id";
+		}
+		if(!isNotNull(aStudent.getFirstname())) {
+			return "Null firstname";
+		}
+		if(!isNotNull(aStudent.getLastname())) {
+			return "Null lastname";
+		}
+		if(!isNotNull(aStudent.getId())) {
+			return "Null Id";
+		}
+		String validPhone = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
+		if(!aStudent.getPhone().matches(validPhone)) {
+			return "phone does not match correct pattern";
+		}
+		if(!isValidEmail(aStudent.getEmailAddress())) {
+			return "Not valid email";
+		}
+		if(!isNotNull(aStudent.getAddressCity())) {
+			return "Null address city";
+		}
+		if(!isValidState(aStudent.getAddressState())) {
+			return "Not valid address state";
+		}
+		String validPostalCode = "^[0-9]{5}(?:-[0-9]{4})?$";
+		if(!aStudent.getAddressPostalCode().matches(validPostalCode)) {
+			return "postal code does not match correct pattern";
+		}
+		if(!isNotNull(aStudent.getAddressStreet())) {
+			return "Null address street";
+		}
+		if(!isValidCollege(record.getCollege())) {
+			return "Not valid college";
+		}
+		if(!isValidTerm(record.getTermBegan())) {
+			return "Not valid term began";
+		}
+		if(!isValidStatus(record.getClassStatus())) {
+			return "Not valid status";
+		}
+		if(!isValidInternationalStatus(record.getInternationalStatus())) {
+			return "Not valid international status";
+		}
+		if(!isValidScholarship(record.getScholarship())) {
+			return "Not valid scholarship";
+		}
+		if(!isValidStudyAbroad(record.getStudyAbroad())) {
+			return "Not valid study abroad";
+		}
+		if(!isValidCourses(record.getCourses())) {
+			return "Not valid courses";
+		}
+		if(record.getCapstoneEnrolled() != null && !isValidTerm(record.getCapstoneEnrolled())) {
+			return "Not valid capstone enrolled";
+		}
+		if(record.getTransactions() != null && !isValidTransactions(record.getTransactions())) {
+			return "Not valid transactions";
+		}
+		
+		return "";
 	}
 	
 	private static boolean isValidTransactions(Transaction[] transactions) 
@@ -216,7 +264,7 @@ public class AVPS
 
 	private static boolean isValidTerm(Term termBegan) 
 	{
-		String validYear = "^[1-9][0-9]{4}$";
+		String validYear = "^[1-9][0-9]{3}$";
 		if(termBegan.getSemester().equals("SPRING") || termBegan.getSemester().equals("SUMMER") || termBegan.getSemester().equals("FALL"))
 		{
 			
@@ -228,10 +276,20 @@ public class AVPS
 		else
 			return false;
 	}
+	
+	private static boolean isValidState(String state) {
+		String[] stateList = {"AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL",
+			"IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV",
+			"NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"};
+		if(isNotNull(state) && Arrays.asList(stateList).contains(state)) {
+			return true;
+		}
+		return false;
+	}
 
 	private static boolean isValidCollege(String college) 
 	{
-		if(college.equals("ARTS_AND_SCIENCES") || college.equals("ENGINEERING_AND_COMPUTING")  ||college.equals("GRADUATE_SCHOOL"))
+		if(college.equals("ARTS_AND_SCIENCES") || college.equals("ENGINEERING_AND_COMPUTING") || college.equals("GRADUATE_SCHOOL"))
 			return true;
 		else
 			return false;
