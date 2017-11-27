@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import main.java.edu.sc.csce740.model.EditRecordException;
 
 public class DHCS {
 
@@ -126,10 +127,10 @@ public class DHCS {
 		}
 	}
 	
-	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws Exception
+	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws EditRecordException, Exception
 	{
-		boolean isValidRecord = AVPS.validateRecord(record);
-		if(isValidRecord)
+		String isValidRecordError = AVPS.validateRecord(record);
+		if(isValidRecordError == "")
 		{
 			if(permanent)
 			{
@@ -138,6 +139,8 @@ public class DHCS {
 			}else{
 				this.updateInternalRecord(userId, record);
 			}
+		} else {
+			throw new EditRecordException(isValidRecordError);
 		}
 	}
 	
