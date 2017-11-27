@@ -262,7 +262,7 @@ public class Billing {
 				
 				// 17 hours/above charge
 				if (numHours >= 17) {
-					if (SR.isActiveDuty() || (!SR.getScholarshop().equals("NONE") && !SR.getScholarshop().trim().equals("")) || SR.isResident()) {
+					if (SR.isActiveDuty() || (!SR.getScholarship().equals("NONE") && !SR.getScholarship().trim().equals("")) || SR.isResident()) {
 						// Active duty, non resident scholarship, or resident
 						chargeList.add(new Transaction("CHARGE", month, day, year, UG_RESIDENT_17_HOURS_ABOVE, "UNDERGRADUATE - RESIDENT, NONRESIDENT SCHOLARSHIP, ACTIVE DUTY MILITARY - 17 HOURS AND ABOVE"));
 					} else if (!SR.isResident()) {
@@ -279,12 +279,12 @@ public class Billing {
 					// In-state 
 					chargeList.add(new Transaction("CHARGE", month, day, year, UG_RESIDENT_TUITION, "UNDERGRADUATE - RESIDENT - TUITION"));
 				} else {
-					if (!SR.getScholarshop().equals("NONE") && !SR.getScholarshop().trim().equals("")) {
+					if (!SR.getScholarship().equals("NONE") && !SR.getScholarship().trim().equals("")) {
 						// Has scholarship
 						String note = "";
 						double amount = -1;
 						
-						switch (SR.getScholarshop()) {
+						switch (SR.getScholarship()) {
 							case "WOODROW":
 								note = "UNDERGRADUATE - NONRESIDENT - SCHOLARSHIP - WOODROW & DEPARTMENTAL";
 								amount = UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION;
@@ -324,12 +324,12 @@ public class Billing {
 					// In-state 
 					chargeList.add(new Transaction("CHARGE", month, day, year, PT_UG_RESIDENT_TUITION, "UNDERGRADUATE - RESIDENT - TUITION"));
 				} else {
-					if (!SR.getScholarshop().equals("NONE") && !SR.getScholarshop().trim().equals("")) {
+					if (!SR.getScholarship().equals("NONE") && !SR.getScholarship().trim().equals("")) {
 						// Has scholarship
 						String note = "";
 						double amount = -1;
 						
-						switch (SR.getScholarshop()) {
+						switch (SR.getScholarship()) {
 							case "WOODROW":
 								note = "UNDERGRADUATE - NONRESIDENT - SCHOLARSHIP - WOODROW & DEPARTMENTAL";
 								amount = PT_UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION;

@@ -239,7 +239,7 @@ public class BILL implements BILLIntf {
     		System.out.println("User is not a valid Admin for this student");
     	}
     	catch(Exception e) {
-    		System.out.println("Exception in getRecord: " + e.getMessage());
+    		System.out.println("Exception in editRecord: " + e.getMessage());
     	}
     }
 

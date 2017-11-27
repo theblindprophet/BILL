@@ -1,6 +1,5 @@
 /**
  * 	Course class object
- * 	Authors: Jamie Gross
  *  Last Modified: 16 November 2017
  */
 

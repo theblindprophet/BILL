@@ -12,6 +12,7 @@ public class StudentRecord {
 	private StudentDemographics student;
 	private String college = "";
 	private Term termBegan;
+	private Term capstoneEnrolled;
 	private String classStatus = "";
 	private boolean gradAssistant = false;
 	private boolean international = false;
@@ -20,7 +21,7 @@ public class StudentRecord {
 	private boolean activeDuty = false;
 	private boolean veteran = false;
 	private boolean freeTuition = false;
-	private String scholarshop = "";
+	private String scholarship = "";
 	private String studyAbroad = "";
 	private boolean nationalStudentExchange = false;
 	private boolean outsideInsurance = false;
@@ -214,16 +215,16 @@ public class StudentRecord {
 	 * 
 	 * @return
 	 */
-	public String getScholarshop() {
-		return scholarshop;
+	public String getScholarship() {
+		return scholarship;
 	}
 
 	/**
 	 * 
 	 * @param scholarshop
 	 */
-	public void setScholarshop(String scholarshop) {
-		this.scholarshop = scholarshop;
+	public void setScholarship(String scholarship) {
+		this.scholarship = scholarship;
 	}
 
 	/**
@@ -321,11 +322,22 @@ public class StudentRecord {
 		return this.transactions;
 	}
 	
+	public Term getCapstoneEnrolled() {
+		return capstoneEnrolled;
+	}
+
+	public void setCapstoneEnrolled(Term capstoneEnrolled) {
+		this.capstoneEnrolled = capstoneEnrolled;
+	}
+	
 	/**
 	 * 
 	 */
 	public String toString() {
+		//TODO
 		return "apples";
 	}
+
+
 
 }

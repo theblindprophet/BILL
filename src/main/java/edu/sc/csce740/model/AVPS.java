@@ -1,5 +1,7 @@
 package main.java.edu.sc.csce740.model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AVPS 
 {
@@ -107,5 +109,124 @@ public class AVPS
 		}else{
 			return false;
 		}
+	}
+	
+	public static boolean validateRecord(StudentRecord record)
+	{
+		String validPhone = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";		
+		
+		StudentDemographics aStudent = record.getStudent();
+		if(isNotNull(aStudent.getId()) && isNotNull(aStudent.getFirstname()) && 
+		   isNotNull(aStudent.getLastname()) && aStudent.getPhone().matches(validPhone) && 
+		   isValidEmail(aStudent.getEmailAddress()) &&  isNotNull(aStudent.getAddressCity()) &&
+		   isNotNull(aStudent.getAddressState()) &&  isNotNull(aStudent.getAddressPostalCode()) &&
+		   isNotNull(aStudent.getAddressStreet()) && isValidCollege(record.getCollege()) && 
+		   isValidTerm(record.getTermBegan()) && isValidStatus(record.getClassStatus()) && 
+		   isValidInternationalStatus(record.getInternationalStatus()) && isValidScholarship(record.getScholarship()) &&
+		   isValidStudyAbroad(record.getStudyAbroad()) && isValidCourses(record.getCourses()) &&
+		   isValidTerm(record.getCapstoneEnrolled()) && isValidTransactions(record.getTransactions()))
+			return true;
+		else
+			return false;
+	}
+	
+	private static boolean isValidTransactions(Transaction[] transactions) 
+	{
+		String validYear = "^[1-9][0-9]{4}$";
+		String validDay = "^(3[0-1]|2[0-9]|1[0-9]|0[1-9])$";
+		String validMonth = "^(1[0-2]|0[1-9])$" ;
+		for(int i = 0; i < transactions.length; i++)
+		{
+			if(!isNotNull(transactions[i].getNote()) || transactions[i].getAmount() < 0.0 ||
+			   !(transactions[i].getType().equals("PAYMENT") || transactions[i].getType().equals("CHARGE")) ||
+			   !Integer.toString(transactions[i].getTransactionDay()).matches(validDay) || 
+			   !Integer.toString(transactions[i].getTransactionMonth()).matches(validMonth) ||
+			   !Integer.toString(transactions[i].getTransactionYear()).matches(validYear))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private static boolean isValidCourses(Course[] courses) 
+	{
+		for(int i = 0; i < courses.length; i++)
+		{
+			if(!isNotNull(courses[i].getId()) || !isNotNull(courses[i].getName()) || courses[i].getNumCredits() < 0)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isValidStudyAbroad(String studyAbroad) {
+		if(studyAbroad.equals("REGULAR") || studyAbroad.equals("COHORT") || 
+		   studyAbroad.equals("NONE"))
+			return true;
+		else
+			return false;
+	}
+
+	private static boolean isValidScholarship(String scholarship) {
+		if(scholarship.equals("WOODROW") || scholarship.equals("DEPARTMENTAL") || 
+		   scholarship.equals("GENERAL") || scholarship.equals("ATHLETIC") ||
+		   scholarship.equals("SIMS") || scholarship.equals("NONE"))
+			return true;
+		else
+			return false;
+	}
+
+	private static boolean isValidInternationalStatus(String internationalStatus) 
+	{
+		if(internationalStatus.equals("SHORT_TERM") || internationalStatus.equals("SPONSORED") || 
+		   internationalStatus.equals("NONE"))
+			return true;
+		else
+			return false;
+	}
+	private static boolean isValidStatus(String classStatus) 
+	{
+		if(classStatus.equals("FRESHMAN") || classStatus.equals("SOPHMORE") || 
+		   classStatus.equals("JUNIOR") || classStatus.equals("SENIOR") ||
+		   classStatus.equals("MASTERS") || classStatus.equals("PHD") ||
+		   classStatus.equals("GRADUATED"))
+			return true;
+		else
+			return false;
+	}
+
+	private static boolean isValidTerm(Term termBegan) 
+	{
+		String validYear = "^[1-9][0-9]{4}$";
+		if(termBegan.getSemester().equals("SPRING") || termBegan.getSemester().equals("SUMMER") || termBegan.getSemester().equals("FALL"))
+		{
+			
+			if(Integer.toString(termBegan.getYear()).matches(validYear))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+
+	private static boolean isValidCollege(String college) 
+	{
+		if(college.equals("ARTS_AND_SCIENCES") || college.equals("ENGINEERING_AND_COMPUTING")  ||college.equals("GRADUATE_SCHOOL"))
+			return true;
+		else
+			return false;
+	} 
+
+	private static boolean isNotNull(String aString)
+	{
+		return aString != null && !aString.isEmpty();
+	}
+	
+	private static boolean isValidEmail(String aString)
+	{
+		return aString != null && !aString.isEmpty() && aString.contains("@");
 	}
 }
