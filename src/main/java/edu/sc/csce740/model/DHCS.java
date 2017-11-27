@@ -9,13 +9,13 @@ public class DHCS {
 
 	private ArrayList<StudentRecord> studentRecords;
 	private ArrayList<User> users;
-	private static User currentUser;
+	private User currentUser;
 	
 	public DHCS()
 	{
 		this.studentRecords = new ArrayList<StudentRecord>();
 		this.users = new ArrayList<User>();
-		DHCS.currentUser = null;
+		this.currentUser = null;
 	}
 
 	public ArrayList<User> getUsers() {
@@ -34,12 +34,12 @@ public class DHCS {
 		this.studentRecords = studentRecords;
 	}
 
-	public static User getCurrentUser() {
+	public User getCurrentUser() {
 		return currentUser;
 	}
 
-	public static void setCurrentUser(User currentUser) {
-		DHCS.currentUser = currentUser;
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
 	}
 
 	public User getUser(String userId) throws InvalidUserIdException

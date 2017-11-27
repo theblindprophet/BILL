@@ -58,7 +58,7 @@ import java.io.FileNotFoundException;
 public class BILL implements BILLIntf {
 	
 	// Global variables
-	DHCS _DHCS= new DHCS();
+	private DHCS _DHCS= new DHCS();
 
     /**
      * Loads the list of system usernames and permissions.
@@ -94,11 +94,14 @@ public class BILL implements BILLIntf {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
     public void logIn(String userId) throws InvalidUserIdException {
+    	Action logInAction = Action.LogIn;
+    	
     	try{
-	    	if(AVPS.hasPermission_LogIn() && _DHCS.getUser(userId) != null)
+    		User newUser = _DHCS.getUser(userId);
+    		
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logInAction) && newUser != null)
 	    	{
-	        	User newUser = _DHCS.getUser(userId);
-	        	DHCS.setCurrentUser(newUser);
+	        	_DHCS.setCurrentUser(newUser);
 	    	}else{
 	    		throw new InvalidUserIdException();
 	    	}
@@ -106,6 +109,9 @@ public class BILL implements BILLIntf {
     	catch(InvalidUserIdException e)
     	{
     		System.out.println(userId + " , is not a valid username");
+    	}
+    	catch(Exception e) {
+    		System.out.println("Exception in logIn: " + e.getMessage());
     	}
     }
 
@@ -117,9 +123,9 @@ public class BILL implements BILLIntf {
     	Action logOutAction = Action.LogOut;
 
     	try{
-	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), logOutAction))
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logOutAction))
 	    	{
-	        	DHCS.setCurrentUser(null);
+	    		_DHCS.setCurrentUser(null);
 	    	}else{
 	    		throw new InvalidUserIdException();
 	    	}
@@ -128,6 +134,9 @@ public class BILL implements BILLIntf {
     	{
     		System.out.println("No user logged in");
     	}
+    	catch(Exception e) {
+    		System.out.println("Exception in logOut: " + e.getMessage());
+    	}
     }
 
     /**
@@ -135,7 +144,7 @@ public class BILL implements BILLIntf {
      * @return  the user id of the user currently using the system.
      */
     public String getUser() {
-		return DHCS.getCurrentUser().getId();
+		return _DHCS.getCurrentUser().getId();
     }
 
     /**
@@ -144,31 +153,35 @@ public class BILL implements BILLIntf {
      *      college belonging to the current user
      * @throws Exception is the current user is not an admin.
      */
-    public List<String> getStudentIDs() throws AdminRightsException {		
+    public List<String> getStudentIDs() throws AdminRightsException, Exception {		
     		Action getStudentIdsAction = Action.GetStudentIds;
         	try{
-    	    	if(AVPS.hasPermission(DHCS.getCurrentUser(), getStudentIdsAction))
-    	    	{
+        		User currUser = _DHCS.getCurrentUser();
+        		
+        		if (currUser != null && currUser.getRole().equals("ADMIN")) {
     	    		ArrayList<User> userList = _DHCS.getUsers();
     	    		ArrayList<String> userIdList = new ArrayList<String>();
     	    		for(User aUser : userList)
     	    		{
-    	    			if(DHCS.getCurrentUser().getCollege().equals(aUser.getCollege()))
+    	    			if(AVPS.hasPermission(currUser, aUser, getStudentIdsAction))
     	    			{
     	    				userIdList.add(aUser.getId());
     	    			}
     	    		}
     	        	return userIdList;
-    	    	}else{
+        		} else {
     	    		throw new AdminRightsException();
-    	    	}
+        		}
         	}
         	catch(AdminRightsException e)
         	{
         		System.out.println("User is not an admin");
-    			return null;
         	}
-
+        	catch(Exception e) {
+        		System.out.println("Exception in getStudentIDs: " + e.getMessage());
+        	}
+        	
+        	return null;
     }
 
     /**
@@ -180,11 +193,11 @@ public class BILL implements BILLIntf {
      */
     public StudentRecord getRecord(String userId) throws Exception {
     	Action getRecordAction = Action.GetRecord;
+    	
     	try{
-	    	if(AVPS.hasPermission(_DHCS.getUser(userId), getRecordAction))
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), getRecordAction))
 	    	{
-	    		StudentRecord aRecord = _DHCS.getRecord(userId);
-	    		return aRecord;
+	    		return _DHCS.getRecord(userId);
 	    	}else{
 	    		throw new GetRecordException();
 	    	}
@@ -192,8 +205,12 @@ public class BILL implements BILLIntf {
     	catch(GetRecordException e)
     	{
     		System.out.println("User does not have correct privledges to get record");
-			return null;
     	}
+    	catch(Exception e) {
+    		System.out.println("Exception in getRecord: " + e.getMessage());
+    	}
+    	
+    	return null;
     }
 
     /**
@@ -208,12 +225,11 @@ public class BILL implements BILLIntf {
     public void editRecord(String userId, StudentRecord record, Boolean permanent)
             throws Exception {
     	Action editRecordAction = Action.EditRecord;
+    	
     	try{
-	    	if(AVPS.hasPermission(_DHCS.getUser(userId), editRecordAction))
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), editRecordAction))
 	    	{
-
 	    		_DHCS.writeRecord(userId, record, permanent);
-
 	    	}else{
 	    		throw new AdminRightsException();
 	    	}
@@ -221,6 +237,9 @@ public class BILL implements BILLIntf {
     	catch(AdminRightsException e)
     	{
     		System.out.println("User is not a valid Admin for this student");
+    	}
+    	catch(Exception e) {
+    		System.out.println("Exception in getRecord: " + e.getMessage());
     	}
     }
 
@@ -232,8 +251,8 @@ public class BILL implements BILLIntf {
      * SEE NOTE IN CLASS HEADER.
      */
     public Bill generateBill(String userId) throws Exception {
-    		Bill apples = new Bill();
-    		return apples;
+    		Bill bill = new Bill();
+    		return bill;
     }
 
     /**
@@ -254,7 +273,7 @@ public class BILL implements BILLIntf {
 		
 		Action viewChargesAction = Action.ViewCharges;
     	try{
-	    	if(AVPS.hasPermission(_DHCS.getUser(userId), viewChargesAction))
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), viewChargesAction))
 	    	{
 	    		StudentRecord record = _DHCS.getRecord(userId);
 	    		Transaction[] transArray = _DHCS.getCharges(userId, startMonth, startDay, startYear, endMonth, endDay, endYear);
