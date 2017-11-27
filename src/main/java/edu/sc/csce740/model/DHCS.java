@@ -10,7 +10,16 @@ public class DHCS {
 	private ArrayList<StudentRecord> studentRecords;
 	private ArrayList<User> users;
 	private User currentUser;
+	private String recordsFile;
 	
+	public String getRecordsFile() {
+		return recordsFile;
+	}
+
+	public void setRecordsFile(String recordsFile) {
+		this.recordsFile = recordsFile;
+	}
+
 	public DHCS()
 	{
 		this.studentRecords = new ArrayList<StudentRecord>();
@@ -96,13 +105,17 @@ public class DHCS {
 	}
 	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws Exception
 	{
-		
-		
-		if(permanent)
+		boolean isValidRecord = AVPS.validateRecord(record);
+		if(isValidRecord)
 		{
-	
-		}else{
-			this.updateInternalRecord(userId, record);
+			if(permanent)
+			{
+				this.writeFile(this.recordsFile, record.toString());
+				this.updateInternalRecord(userId, record);
+				
+			}else{
+				this.updateInternalRecord(userId, record);
+			}
 		}
 	}
 	public StudentRecord getRecord(String userId) throws GetRecordException
@@ -147,5 +160,7 @@ public class DHCS {
 		return validTransArray;
 		
 	}
+	
+	
 
 }
