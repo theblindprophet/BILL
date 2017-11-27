@@ -14,7 +14,7 @@ public class User {
 	private String lastname = "";
 	private String role = "";
 	private String college = "";
-	private StudentRecord record;
+	private StudentRecord record = null;
 	
 	/**
 	 * 

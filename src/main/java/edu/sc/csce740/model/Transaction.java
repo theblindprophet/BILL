@@ -23,6 +23,14 @@ public class Transaction {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Transaction(String type, int transMonth, int transDay, int transYear, double amount, String note) {
+		type = "";
+		this.transactionMonth = transMonth;
+		this.transactionDay = transDay;
+		this.transactionYear = transYear;
+		this.amount = amount;
+		this.note = note;
+	}
 	/**
 	 * 
 	 * @return

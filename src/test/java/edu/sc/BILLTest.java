@@ -1,26 +1,29 @@
-package test.java.edu.sc.csce740;
+package test.java.edu.sc;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import main.java.edu.sc.csce740.BILL;
 import main.java.edu.sc.csce740.model.Bill;
+
 
 public class BILLTest {
 	
 	static BILL testerClass;
 	
-	@BeforeAll
-    public static void beforeClass() {
+	@Before
+    public void beforeClass() {
         System.out.println("@BeforeClass");
         testerClass = new BILL();
     }
 
 	@Test
-	void testLoadUsers() {
+	public void testLoadUsers() {
 		try {
 			testerClass.loadUsers("users.txt");
 		} catch(FileNotFoundException | NullPointerException e) {
@@ -29,7 +32,7 @@ public class BILLTest {
 	}
 	
 	@Test
-	void testLoadRecords() {
+	public void testLoadRecords() {
 		try {
 			testerClass.loadRecords("students.txt");
 		} catch(FileNotFoundException | NullPointerException e) {
@@ -37,8 +40,8 @@ public class BILLTest {
 		}
 	}
 	
-	@AfterAll
-    public static void after() {
+	@After
+    public void after() {
         System.out.println("@After");
     }
 
