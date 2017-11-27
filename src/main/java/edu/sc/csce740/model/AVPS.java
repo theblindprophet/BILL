@@ -2,6 +2,7 @@ package main.java.edu.sc.csce740.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Arrays;
 
 public class AVPS 
 {
@@ -280,7 +281,7 @@ public class AVPS
 		String[] stateList = {"AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL",
 			"IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV",
 			"NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"};
-		if(isNotNull(state) && java.util.Arrays.asList(stateList).contains(state)) {
+		if(isNotNull(state) && Arrays.asList(stateList).contains(state)) {
 			return true;
 		}
 		return false;

@@ -12,6 +12,9 @@ import java.util.List;
 import main.java.edu.sc.csce740.BILL;
 import main.java.edu.sc.csce740.model.Bill;
 import main.java.edu.sc.csce740.model.StudentRecord;
+import main.java.edu.sc.csce740.model.StudentDemographics;
+import main.java.edu.sc.csce740.model.Term;
+import main.java.edu.sc.csce740.model.Course;
 import main.java.edu.sc.csce740.model.InvalidUserIdException;
 import main.java.edu.sc.csce740.model.AdminRightsException;
 import main.java.edu.sc.csce740.model.GetRecordException;
@@ -192,32 +195,51 @@ public class BILLTest {
 		} catch(InvalidUserIdException e) {
 			fail(e.getMessage());
 		}
-		StudentRecord testStudent;
+		StudentRecord testStudent = new StudentRecord();
+		StudentDemographics testStudentStudent = new StudentDemographics();
+		Term testStudentTermBegan = new Term();
+		Course[] testStudentCourses = new Course[1];
 		try {
-			testStudent = testerClass.getRecord("ggay");
-			testStudent.getStudent().setFirstname("Apples");
-			testStudent.getStudent().setPhone("222-222-2222");
-			testStudent.getStudent().setAddressState("NC");
-			testStudent.getTermBegan().setYear(2016);
+			testStudentStudent.setId("ggay");
+			testStudentStudent.setFirstname("Apples");
+			testStudentStudent.setLastname("Limes");
+			testStudentStudent.setEmailAddress("jamie@jamie.com");
+			testStudentStudent.setAddressStreet("111 Main St");
+			testStudentStudent.setAddressCity("Columbia");
+			testStudentStudent.setAddressState("NC");
+			testStudentStudent.setAddressPostalCode("29201");
+			testStudentStudent.setPhone("222-222-2222");
+			testStudent.setCollege("ENGINEERING_AND_COMPUTING");
+			testStudentTermBegan.setSemester("FALL");
+			testStudentTermBegan.setYear(2016);
+			testStudent.setClassStatus("JUNIOR");
+			testStudent.setStudyAbroad("NONE");
+			testStudent.setInternationalStatus("NONE");
 			testStudent.setScholarship("SIMS");
-			testStudent.getCourses()[1].setName("Apples Apples Apples");
 			testStudent.setInternationalStatus("SPONSORED");
+			Course course1 = new Course();
+			course1.setName("Apples Apples Apples");
+			course1.setID("CSCE");
+			course1.setNumCredits(3);
+			testStudentCourses[0] = course1;
+			
+			testStudent.setStudent(testStudentStudent);
+			testStudent.setTermBegan(testStudentTermBegan);
+			testStudent.setCourses(testStudentCourses);
 			testerClass.editRecord("ggay", testStudent, false);
-		} catch(GetRecordException e) {
-			fail(e.getMessage());
 		} catch(Exception e) {
 			fail(e.getMessage());
 		}
 		
 		try {
-			testStudent = testerClass.getRecord("ggay");
-			assertEquals("Apples", testStudent.getStudent().getFirstname());
-			assertEquals("222-222-2222", testStudent.getStudent().getPhone());
-			assertEquals("NC", testStudent.getStudent().getAddressState());
-			assertEquals(2016, testStudent.getTermBegan().getYear());
-			assertEquals("SIMS", testStudent.getScholarship());
-			assertEquals("Apples Apples Apples", testStudent.getCourses()[1].getName());
-			assertEquals("SPONSORED", testStudent.getInternationalStatus());
+			StudentRecord retrievedStudent = testerClass.getRecord("ggay");
+			assertEquals("Apples", retrievedStudent.getStudent().getFirstname());
+			assertEquals("222-222-2222", retrievedStudent.getStudent().getPhone());
+			assertEquals("NC", retrievedStudent.getStudent().getAddressState());
+			assertEquals(2016, retrievedStudent.getTermBegan().getYear());
+			assertEquals("SIMS", retrievedStudent.getScholarship());
+			assertEquals("Apples Apples Apples", retrievedStudent.getCourses()[0].getName());
+			assertEquals("SPONSORED", retrievedStudent.getInternationalStatus());
 		} catch(GetRecordException e) {
 			fail(e.getMessage());
 		} catch(Exception e) {

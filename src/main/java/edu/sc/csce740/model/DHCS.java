@@ -89,19 +89,23 @@ public class DHCS {
 	{
 		try
 		{
-			for(StudentRecord aRecord : this.studentRecords)
-			{
-				if(aRecord.getStudent().getId().equals(userId))
+			boolean found = false;
+			for(int i=0; i<this.studentRecords.size(); i++) {
+				if(this.studentRecords.get(i).getStudent().getId().equals(userId))
 				{
-					aRecord = record;
+					found = true;
+					this.studentRecords.set(i, record);
 				}
 			}
-			throw new InvalidUserIdException();
+			if(!found) {
+				throw new InvalidUserIdException();
+			}
 		}
 		catch(InvalidUserIdException e)
 		{
 			System.out.println("Invalid User Id to update record");
 		}
+		System.out.println(studentRecords.get(1).getStudent().getFirstname());
 	}
 	private String readFile(String fileName) throws Exception
 	{
@@ -113,6 +117,7 @@ public class DHCS {
 	{
 		Gson gson = new Gson();
 		String json = gson.toJson(this.studentRecords);
+		System.out.println(json);
 		try {
 			File file = new File(fileName);
 			if (file.exists())
