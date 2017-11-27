@@ -302,7 +302,21 @@ public class BILL implements BILLIntf {
      */
     public void applyPayment(String userId, double amount, String note)
             throws Exception {
-    	
+    	Action applyPaymentAction = Action.ApplyPayment;
+    	try{
+	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), applyPaymentAction))
+	    	{
+	    		StudentRecord record = _DHCS.getRecord(userId);
+	    		Billing.applyPayment(record, amount, note);
+	    	}else{
+	    		throw new AdminRightsException();
+	    	}
+    	}
+    	catch(AdminRightsException e)
+    	{
+    		System.out.println("User is not a valid Admin for this student");
+    	}
     }
+
 
 }

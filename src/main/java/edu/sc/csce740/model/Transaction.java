@@ -24,7 +24,7 @@ public class Transaction {
 	}
 
 	public Transaction(String type, int transMonth, int transDay, int transYear, double amount, String note) {
-		type = "";
+		this.type = type;
 		this.transactionMonth = transMonth;
 		this.transactionDay = transDay;
 		this.transactionYear = transYear;
