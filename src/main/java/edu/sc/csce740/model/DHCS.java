@@ -99,10 +99,12 @@ public class DHCS {
 		return fileName;
 		
 	}
+	
 	private void writeFile(String fileName, String data) throws Exception
 	{
 		
 	}
+	
 	public void writeRecord(String userId, StudentRecord record, Boolean permanent) throws Exception
 	{
 		boolean isValidRecord = AVPS.validateRecord(record);
@@ -118,6 +120,7 @@ public class DHCS {
 			}
 		}
 	}
+	
 	public StudentRecord getRecord(String userId) throws GetRecordException
 	{
 		try
