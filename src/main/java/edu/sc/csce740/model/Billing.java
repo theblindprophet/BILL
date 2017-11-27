@@ -200,6 +200,20 @@ public class Billing {
 			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.HEALTH_INSURANCE), Fee.getFeeNote(EnumFee.HEALTH_INSURANCE)));
 		}
 		
+		// Study Abroad
+		if (SR.getStudyAbroad().equals("REGULAR") || SR.getStudyAbroad().equals("COHORT")) {
+			// Is a study abroad student
+			// So, we apply the insurance fee and exchange deposit fee
+			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.STUDY_ABROAD_INSURANCE), Fee.getFeeNote(EnumFee.STUDY_ABROAD_INSURANCE)));
+			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT), Fee.getFeeNote(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT)));
+		}
+		// 		Study abroad fees (regular OR cohort)
+		if (SR.getStudyAbroad().equals("REGULAR")) {
+			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.STUDY_ABROAD), Fee.getFeeNote(EnumFee.STUDY_ABROAD)));
+		} else if (SR.getStudyAbroad().equals("COHORT")) {
+			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.STUDY_ABROAD_COHORT), Fee.getFeeNote(EnumFee.STUDY_ABROAD_COHORT)));
+		}
+		
 		
 		//////////////////////////////////////////		
 		// Fees related to class status:
