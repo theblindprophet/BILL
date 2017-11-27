@@ -1,5 +1,7 @@
 package main.java.edu.sc.csce740.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -124,6 +126,34 @@ public class Billing {
 		chargeList.addAll(getPreviousCharges(user.getRecord()));
 		
 		return (Transaction[]) chargeList.toArray();
+	}
+	
+	public static void applyPayment(StudentRecord record, double amount, String note) throws InvalidPaymentException
+	{
+		Transaction[] newTransactions = new Transaction[record.getTransactions().length+1];
+		LocalDateTime today = LocalDateTime.now();
+		int year = today.getYear();
+		int month = today.getMonth().getValue();
+		int day = today.getDayOfYear();
+		Transaction newPayment = new Transaction("PAYMENT", month, day, year, amount, note);
+		
+		boolean isValidPayment = AVPS.isValidTransaction(newPayment);
+		try
+		{
+			if(isValidPayment)
+			{
+				newTransactions[newTransactions.length -1] = newPayment;
+				record.setTransactions(newTransactions);
+			}
+			else
+			{
+				throw new InvalidPaymentException();
+			}
+		}
+		catch(InvalidPaymentException e)
+		{
+			System.out.println("This is a not a valid payment");;
+		}
 	}
 	
 	private static ArrayList<Transaction> calculateCurrentCharges(User user) {
@@ -318,4 +348,7 @@ public class Billing {
 		
 		return numHours;
 	}
+	
+	
+	
 }

@@ -138,7 +138,7 @@ public class AVPS
 		for(int i = 0; i < transactions.length; i++)
 		{
 			if(!isNotNull(transactions[i].getNote()) || transactions[i].getAmount() < 0.0 ||
-			   !(transactions[i].getType().equals("PAYMENT") || transactions[i].getType().equals("CHARGE")) ||
+			   !(transactions[i].getType().equals("PAYMENT") || !transactions[i].getType().equals("CHARGE")) ||
 			   !Integer.toString(transactions[i].getTransactionDay()).matches(validDay) || 
 			   !Integer.toString(transactions[i].getTransactionMonth()).matches(validMonth) ||
 			   !Integer.toString(transactions[i].getTransactionYear()).matches(validYear))
@@ -149,11 +149,28 @@ public class AVPS
 		return true;
 	}
 	
+	
+	public static boolean isValidTransaction(Transaction transaction) 
+	{
+		String validYear = "^[1-9][0-9]{4}$";
+		String validDay = "^(3[0-1]|2[0-9]|1[0-9]|0[1-9])$";
+		String validMonth = "^(1[0-2]|0[1-9])$" ;
+
+		if(isNotNull(transaction.getNote()) || transaction.getAmount() >= 0.0 ||
+		   (transaction.getType().equals("PAYMENT") || transaction.getType().equals("CHARGE")) ||
+		   Integer.toString(transaction.getTransactionDay()).matches(validDay) || 
+		   Integer.toString(transaction.getTransactionMonth()).matches(validMonth) ||
+		   Integer.toString(transaction.getTransactionYear()).matches(validYear))
+			return true;
+		else
+			return false;
+	}
+	
 	private static boolean isValidCourses(Course[] courses) 
 	{
 		for(int i = 0; i < courses.length; i++)
 		{
-			if(!isNotNull(courses[i].getId()) || !isNotNull(courses[i].getName()) || courses[i].getNumCredits() < 0)
+			if(!isNotNull(courses[i].getID()) || !isNotNull(courses[i].getName()) || courses[i].getNumHours() < 0)
 			{
 				return false;
 			}
