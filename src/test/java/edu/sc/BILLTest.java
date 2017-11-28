@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import main.java.edu.sc.csce740.BILL;
-import main.java.edu.sc.csce740.model.Bill;
 import main.java.edu.sc.csce740.model.StudentRecord;
 import main.java.edu.sc.csce740.model.StudentDemographics;
 import main.java.edu.sc.csce740.model.Term;
@@ -26,7 +25,9 @@ import main.java.edu.sc.csce740.model.EditRecordException;
 public class BILLTest {
 	
 	static BILL testerClass;
-	
+	/**
+	 * Loads users and records before every test
+	 */
 	@Before
     public void before() {
         testerClass = new BILL();
@@ -45,6 +46,10 @@ public class BILLTest {
      	testerClass.logOut();
     }
 	
+	/**
+	 * Test the users ability to log out
+	 * @result Account will be logged out without any errors      
+	 */
 	@Test
 	public void testLoginLogout() {
 		// Login
@@ -55,6 +60,10 @@ public class BILLTest {
         }
 	}
 	
+	/**
+	 * Test that log in will throw an exception for invalid user id
+	 * @result exception thrown
+	 */
 	@Test
 	public void testLoginInvalid() {
 		// Login
@@ -68,6 +77,10 @@ public class BILLTest {
         }
 	}
 	
+	/**
+	 * Test that log get user will work with no errors
+	 * @result user is returned correctly
+	 */
 	@Test
 	public void testGetUser() {
 		// Login
@@ -81,6 +94,11 @@ public class BILLTest {
 		assertEquals("mhunt", id);
 	}
 	
+	
+	/**
+	 * Test that an admin can obtain correct user ids
+	 * @result correct student ids are returned
+	 */
 	@Test
 	public void testGetStudentIDsAdmin() {
 		// Login
@@ -99,6 +117,11 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Test that a user that is not an admin cannot 
+	 * obtain a list of users
+	 * @result exception is thrown because user is not an admin
+	 */
 	@Test
 	public void testGetStudentIDsNotAdmin() {
 		// Login
@@ -117,6 +140,11 @@ public class BILLTest {
 		}
 	}
 	
+	
+	/**
+	 * Test that a user with correct permissions can obtain a student record
+	 * @result student record is obtained with no errors
+	 */
 	@Test
 	public void testGetRecord() {
 		// Login
@@ -137,6 +165,11 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Test that a user without correct permissions cannot obtain a student record
+	 * @result exception is thrown because user is attempting to access another users
+	 * student record
+	 */
 	@Test
 	public void testGetRecordIsNotAdmin() {
 		// Login
@@ -155,6 +188,11 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Test that a user without correct permissions cannot obtain a student record
+	 * @result exception is thrown because user is attempting to access another users
+	 * student record
+	 */
 	@Test
 	public void testGetRecordNoPermissionForStudent() {
 		// Login
@@ -173,18 +211,37 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Test that a record can be edited without it writing to file
+	 * @result student record written in memory but not to file
+	 */
 	@Test
 	public void testEditRecordNotPermnanent() {
 		this.testEditRecord(false, "rbob", false);
 	}
+	
+	/**
+	 * Test that a record can be edited and written to file
+	 * @result student record written in memory and also to file
+	 */
 	@Test
 	public void testEditRecordPermnanent() {
 		this.testEditRecord(true, "rbob", false);
 	}
+	
+	/**
+	 * Test that a record cannot be edited with invalid permissions
+	 * @result student record is not edited
+	 */
 	@Test
 	public void testEditRecordInvalidPermission() {
 		this.testEditRecord(false, "jgross", true);
 	}
+	
+	/**
+	 * Test that a record is updated with correct values
+	 * @result student record is updated with correct values
+	 */
 	@Test
 	public void testEditRecordInvalidValues() {
 		this.testEditRecordInvalid("state", "Edit Record error: Not valid address state");
@@ -194,6 +251,9 @@ public class BILLTest {
 		this.testEditRecordInvalid("scholarship", "Edit Record error: Not valid scholarship");
 	}
 	
+	/**
+	 * This function is used for testing student record in various ways depending on the parameters
+	 */
 	public void testEditRecord(boolean permanent, String user, boolean shouldFail) {
 		// Login
 		try {
@@ -225,7 +285,7 @@ public class BILLTest {
 			testStudent.setInternationalStatus("SPONSORED");
 			Course course1 = new Course();
 			course1.setName("Apples Apples Apples");
-			course1.setID("CSCE");
+			course1.setId("CSCE");
 			course1.setNumCredits(3);
 			testStudentCourses[0] = course1;
 			
@@ -266,6 +326,9 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Test that a record will not be written if the record is invalid
+	 */
 	public void testEditRecordInvalid(String value, String error) {
 		// Login
 		try {
@@ -310,7 +373,7 @@ public class BILLTest {
 			testStudent.setInternationalStatus("SPONSORED");
 			Course course1 = new Course();
 			course1.setName("Apples Apples Apples");
-			course1.setID("CSCE");
+			course1.setId("CSCE");
 			course1.setNumCredits(3);
 			testStudentCourses[0] = course1;
 			
@@ -328,6 +391,11 @@ public class BILLTest {
 		}
 	}
 	
+	
+	/**
+	 * Test that a bill can be generated correctly
+	 * @result bill is generated
+	 */
 	@Test
 	public void testGenerateBill() {
 		try {

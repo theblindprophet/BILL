@@ -1,10 +1,14 @@
 package main.java.edu.sc.csce740.model;
 
 @SuppressWarnings("serial")
-public class AdminRightsException extends Exception{
+/*
+ * Class used for throwing an AdminRightsException
+ */
+public class AdminRightsException extends Exception {
 
-
-		public AdminRightsException()
-		{
-		}
+	/*
+	 * Default Constructor
+	 */
+	public AdminRightsException() {
+	}
 }

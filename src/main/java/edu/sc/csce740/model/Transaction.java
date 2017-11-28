@@ -6,8 +6,9 @@
 
 package main.java.edu.sc.csce740.model;
 
-import java.util.Date;
-
+/*
+ * Transaction Class: used for representing the transaction data type
+ */
 public class Transaction {
 
 	// Class variables
@@ -15,15 +16,31 @@ public class Transaction {
 	private TransactionDate transactionDate;
 	private double amount = 0.0;
 	private String note = "";
-	
+
 	/**
-	 * 
+	 * Default Constructor
 	 */
 	public Transaction() {
 		// TODO Auto-generated constructor stub
 		transactionDate = new TransactionDate();
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param type:
+	 *            String for type of transaction
+	 * @param transMonth:
+	 *            integer for the month of transaction
+	 * @param transDay:
+	 *            integer for the day of the transaction
+	 * @param transYear:
+	 *            integer for the year of the transaction
+	 * @param amount:
+	 *            double for the amount of the transaction
+	 * @param note:
+	 *            String for the description of the transaction
+	 */
 	public Transaction(String type, int transMonth, int transDay, int transYear, double amount, String note) {
 		this();
 		this.type = type;
@@ -33,6 +50,9 @@ public class Transaction {
 		this.amount = amount;
 		this.note = note;
 	}
+
+	/*************** GETTERS AND SETTERS ****************/
+
 	/**
 	 * 
 	 * @return
@@ -129,26 +149,61 @@ public class Transaction {
 		this.note = note;
 	}
 
+	/*
+	 * TransactionDate class: used for representing Date data type
+	 */
 	public class TransactionDate {
+		// class variables
 		private int month = 0;
 		private int day = 0;
 		private int year = 0;
-		
+
+		/*************** GETTERS AND SETTERS ****************/
+
+		/**
+		 * 
+		 * @retur day
+		 */
 		public int getDay() {
 			return day;
 		}
+
+		/**
+		 * 
+		 * @param day
+		 */
 		public void setDay(int day) {
 			this.day = day;
 		}
+
+		/**
+		 * 
+		 * @return month
+		 */
 		public int getMonth() {
 			return month;
 		}
+
+		/**
+		 * 
+		 * @param month
+		 */
 		public void setMonth(int month) {
 			this.month = month;
 		}
+
+		/**
+		 * 
+		 * @retur year
+		 */
 		public int getYear() {
 			return year;
 		}
+
+		/**
+		 * 
+		 * @param year
+		 */
 		public void setYear(int year) {
 			this.year = year;
 		}

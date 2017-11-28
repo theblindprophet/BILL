@@ -12,7 +12,7 @@ public class Term {
 	// Class variables
 	private String semester = "";
 	private int year = 0;
-	
+
 	/**
 	 * 
 	 */
@@ -51,16 +51,17 @@ public class Term {
 	public void setYear(int year) {
 		this.year = year;
 	}
-	
+
 	public int termDifference(Term term) {
 		int termDiff = 0;
 		String currSemester = this.semester;
 		int currYear = this.year;
-		
+
 		if (!term.getSemester().equals("") && !this.semester.equals("")) {
 			while (currYear != term.getYear() && !currSemester.equals(term.getSemester())) {
-				
-				if (currYear < term.getYear()) { // If term difference is positive
+
+				if (currYear < term.getYear()) { // If term difference is
+													// positive
 					termDiff++;
 					if (currSemester.equals("FALL")) {
 						currSemester = "SPRING";
@@ -70,7 +71,7 @@ public class Term {
 					}
 				} else { // If term difference is negative
 					termDiff--;
-					
+
 					if (currSemester.equals("FALL")) {
 						currSemester = "SPRING";
 					} else if (currSemester.equals("SPRING")) {
@@ -80,15 +81,11 @@ public class Term {
 				}
 			}
 		}
-		
+
 		return termDiff;
 	}
-	
-	
-	
-	public String toString()
-	{
+
+	public String toString() {
 		return semester + "-" + year;
 	}
 }
-

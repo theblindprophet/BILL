@@ -5,24 +5,45 @@
  */
 
 package main.java.edu.sc.csce740.model;
-import com.google.gson.Gson;
 
+/*
+ * Bill Class: class for representing the Bill data type
+ */
 public class Bill {
-	
+
 	// Class variables
 	private StudentDemographics student;
 	private String college = "";
 	private String classStatus = "";
 	private Transaction[] transactions;
-	
-	public Bill(StudentDemographics student, String college, String classStatus, Transaction[] transactions){
+
+	/*
+	 * Constructor
+	 * 
+	 * @param student: StudentDemographic that contains information about the
+	 * student user
+	 * 
+	 * @param college: String for the college of the user
+	 * 
+	 * @param classStatus: String for the class status of the user
+	 * 
+	 * @param transactions: transaction array containing all of the student
+	 * users transactions
+	 */
+	public Bill(StudentDemographics student, String college, String classStatus, Transaction[] transactions) {
 		// TODO Auto-generated constructor stub
 		this.student = student;
 		this.college = college;
 		this.classStatus = classStatus;
 		this.transactions = transactions;
 	}
-	
+
+	/*************** GETTERS AND SETTERS ****************/
+
+	/**
+	 * 
+	 * @return
+	 */
 	public double getBalance() {
 		return Billing.calculateBalance(this.transactions);
 	}
@@ -34,7 +55,7 @@ public class Bill {
 	public StudentDemographics getStudent() {
 		return student;
 	}
-	
+
 	/**
 	 * 
 	 * @param student
@@ -42,7 +63,7 @@ public class Bill {
 	public void setStudent(StudentDemographics student) {
 		this.student = student;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -50,7 +71,7 @@ public class Bill {
 	public String getCollege() {
 		return college;
 	}
-	
+
 	/**
 	 * 
 	 * @param college
@@ -58,7 +79,7 @@ public class Bill {
 	public void setCollege(String college) {
 		this.college = college;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -66,7 +87,7 @@ public class Bill {
 	public String getClassStatus() {
 		return classStatus;
 	}
-	
+
 	/**
 	 * 
 	 * @param classStatus
@@ -74,7 +95,7 @@ public class Bill {
 	public void setClassStatus(String classStatus) {
 		this.classStatus = classStatus;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -82,7 +103,7 @@ public class Bill {
 	public Transaction[] getTransactions() {
 		return transactions;
 	}
-	
+
 	/**
 	 * 
 	 * @param transactions
@@ -90,6 +111,5 @@ public class Bill {
 	public void setTransactions(Transaction[] transactions) {
 		this.transactions = transactions;
 	}
-
 
 }

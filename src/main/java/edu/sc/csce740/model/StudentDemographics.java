@@ -6,6 +6,10 @@
 
 package main.java.edu.sc.csce740.model;
 
+/**
+ * StudentDemographics class: class for representing the student demographics
+ * data type
+ */
 public class StudentDemographics {
 
 	// Class variables
@@ -18,13 +22,15 @@ public class StudentDemographics {
 	private String addressCity = "";
 	private String addressState = "";
 	private String addressPostalCode = "";
-	
+
 	/**
-	 * 
+	 * Default Constructor
 	 */
 	public StudentDemographics() {
 		// TODO Auto-generated constructor stub
 	}
+
+	/*************** GETTERS AND SETTERS ****************/
 
 	/**
 	 * 

@@ -1,9 +1,5 @@
 package test.java.edu.sc;
 
-import main.java.edu.sc.csce740.BILL;
-
-import org.junit.runner.RunWith;
-
 public class BILLTestMain {
 
 	public BILLTestMain() {

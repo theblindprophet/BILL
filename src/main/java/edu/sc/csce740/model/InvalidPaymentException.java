@@ -1,10 +1,14 @@
 package main.java.edu.sc.csce740.model;
 
 @SuppressWarnings("serial")
-public class InvalidPaymentException extends Exception{
+/*
+ * Class used for throwing an InvalidPaymentException
+ */
+public class InvalidPaymentException extends Exception {
 
-
-		public InvalidPaymentException()
-		{
-		}
+	/*
+	 * Default Constructor
+	 */
+	public InvalidPaymentException() {
+	}
 }

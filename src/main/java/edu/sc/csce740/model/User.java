@@ -6,8 +6,11 @@
 
 package main.java.edu.sc.csce740.model;
 
+/*
+ * User Class: used for representing the user data type 
+ */
 public class User {
-	
+
 	// Class variables
 	private String id = "";
 	private String firstName = "";
@@ -15,13 +18,15 @@ public class User {
 	private String role = "";
 	private String college = "";
 	private StudentRecord record = null;
-	
+
 	/**
-	 * 
+	 * Default Constructor
 	 */
 	public User() {
 		this.record = new StudentRecord();
 	}
+
+	/*************** GETTERS AND SETTERS ****************/
 
 	/**
 	 * 
@@ -118,23 +123,13 @@ public class User {
 	public void setRecord(StudentRecord record) {
 		this.record = record;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
 	public String getUser() {
 		return "apples";
-	}
-	
-	/**
-	 * 
-	 * @param recordString
-	 */
-	public StudentRecord parseStudent(String recordString) {
-		StudentRecord newRecord = new StudentRecord();
-		//TO-DO: Write this
-		return newRecord;
 	}
 
 }

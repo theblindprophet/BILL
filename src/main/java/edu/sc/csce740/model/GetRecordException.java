@@ -1,10 +1,14 @@
 package main.java.edu.sc.csce740.model;
 
 @SuppressWarnings("serial")
-public class GetRecordException extends Exception{
+/*
+ * Class used for throwing an GetRecordException
+ */
+public class GetRecordException extends Exception {
 
-
-		public GetRecordException()
-		{
-		}
+	/*
+	 * Default Constructor
+	 */
+	public GetRecordException() {
+	}
 }

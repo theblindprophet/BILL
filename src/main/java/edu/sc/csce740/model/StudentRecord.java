@@ -6,8 +6,11 @@
 
 package main.java.edu.sc.csce740.model;
 
+/**
+ * Student Record class: class for representing the student record data type
+ */
 public class StudentRecord {
-	
+
 	// Class variables
 	private StudentDemographics student;
 	private String college = "";
@@ -29,7 +32,7 @@ public class StudentRecord {
 	private Transaction[] transactions;
 
 	/**
-	 * 
+	 * Default Constructor
 	 */
 	public StudentRecord() {
 		// TODO Auto-generated constructor stub
@@ -38,6 +41,8 @@ public class StudentRecord {
 		student = new StudentDemographics();
 		termBegan = new Term();
 	}
+
+	/*************** GETTERS AND SETTERS ****************/
 
 	/**
 	 * 
@@ -310,43 +315,59 @@ public class StudentRecord {
 	public void setTransactions(Transaction[] transactions) {
 		this.transactions = transactions;
 	}
-	
+
 	/**
 	 * 
-	 * @param startMonth
-	 * @param startDay
-	 * @param startYear
-	 * @param endMonth
-	 * @param endDay
-	 * @param endYear
-	 * @return
+	 * @returns Term
 	 */
-	public Transaction[] getTransactionPeriod(int startMonth, int startDay, int startYear,
-											 int endMonth, int endDay, int endYear) {
-		return this.transactions;
-	}
-	
 	public Term getCapstoneEnrolled() {
 		return capstoneEnrolled;
 	}
 
+	/**
+	 * 
+	 * @param capstoneEnrolled
+	 *            term
+	 */
 	public void setCapstoneEnrolled(Term capstoneEnrolled) {
 		this.capstoneEnrolled = capstoneEnrolled;
 	}
-	
+
 	/**
+	 * Function to get a array of transactions that occur during a period of
+	 * time
 	 * 
+	 * @param startMonth:
+	 *            integer for starting month
+	 * @param startDay:
+	 *            integer for starting day
+	 * @param startYear:
+	 *            integer for starting year
+	 * @param endMonth:
+	 *            integer for ending month
+	 * @param endDay:
+	 *            integer for ending day
+	 * @param endYear:
+	 *            integer for ending year
+	 * @return transaction[]: array of transactions for the given period
 	 */
-	public String toString() {
-		//TODO
-		String recordString = "";
-		recordString = "("+student+")"  + " - " + college + " - " + "("+termBegan+")" + " - " + "("+capstoneEnrolled+")" + " - " + classStatus + " - " + 
-					   gradAssistant + " - " + international + " - " + internationalStatus + " - " + resident + " - " + activeDuty + " - " + 
-					   veteran + " - " + freeTuition + " - " + scholarship + " - " + studyAbroad + " - " + nationalStudentExchange + " - " + 
-					   outsideInsurance + " - " + "("+courses+")" + "("+transactions+")";
-		return recordString;
+	public Transaction[] getTransactionPeriod(int startMonth, int startDay, int startYear, int endMonth, int endDay,
+			int endYear) {
+		return this.transactions;
 	}
 
-
+	/**
+	 * ToString
+	 */
+	public String toString() {
+		// TODO
+		String recordString = "";
+		recordString = "(" + student + ")" + " - " + college + " - " + "(" + termBegan + ")" + " - " + "("
+				+ capstoneEnrolled + ")" + " - " + classStatus + " - " + gradAssistant + " - " + international + " - "
+				+ internationalStatus + " - " + resident + " - " + activeDuty + " - " + veteran + " - " + freeTuition
+				+ " - " + scholarship + " - " + studyAbroad + " - " + nationalStudentExchange + " - " + outsideInsurance
+				+ " - " + "(" + courses + ")" + "(" + transactions + ")";
+		return recordString;
+	}
 
 }
