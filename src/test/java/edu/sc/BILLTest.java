@@ -254,10 +254,11 @@ public class BILLTest {
 		System.out.println("\n\n\n************\nIn testGenerateBill\n************");
 		
 		try {
-			testerClass.logIn("jsmith");
+			testerClass.logIn("ggay");
+			testerClass.applyPayment("ggay", 5000, "Titties");
 			Gson gson = new Gson();
 			
-			String json = gson.toJson(testerClass.generateBill("mhunt"));
+			String json = gson.toJson(testerClass.generateBill("ggay"));
 			System.out.println(json);
 		} catch (Exception e) {
 			fail("testGenerateBill failed: " + e.getMessage());

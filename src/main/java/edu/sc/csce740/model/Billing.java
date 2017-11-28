@@ -46,9 +46,12 @@ public class Billing {
 	{
 		Transaction[] newTransactions = new Transaction[record.getTransactions().length+1];
 		LocalDateTime today = LocalDateTime.now();
-		int year = today.getYear();
-		int month = today.getMonth().getValue();
-		int day = today.getDayOfYear();
+		
+		Calendar c = Calendar.getInstance();
+		final int month = c.get(Calendar.MONTH) + 1;
+		final int day = c.get(Calendar.DATE);
+		final int year = c.get(Calendar.YEAR);
+		
 		Transaction newPayment = new Transaction("PAYMENT", month, day, year, amount, note);
 		
 		boolean isValidPayment = AVPS.isValidTransaction(newPayment);
