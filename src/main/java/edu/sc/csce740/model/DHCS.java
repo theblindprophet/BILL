@@ -97,7 +97,7 @@ public class DHCS {
 		}
 		catch(InvalidUserIdException e)
 		{
-			System.out.println("Invalid User Id");
+			System.out.println("Invalid User Id: " + userId);
 			return null;
 		}
 	}
@@ -125,7 +125,7 @@ public class DHCS {
 		}
 		catch(InvalidUserIdException e)
 		{
-			System.out.println("Invalid User Id to update record");
+			System.out.println("Invalid User Id (" + userId + ") to update record");
 		}
 	}
 	
@@ -185,7 +185,7 @@ public class DHCS {
 		}
 		catch(GetRecordException e)
 		{
-			System.out.println("No Record for this Id");
+			System.out.println("No Record for " + userId);
 			return null;
 		}
 	}

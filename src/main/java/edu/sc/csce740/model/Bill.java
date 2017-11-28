@@ -90,27 +90,6 @@ public class Bill {
 	public void setTransactions(Transaction[] transactions) {
 		this.transactions = transactions;
 	}
-	
-	/**
-	 * 
-	 * @param startMonth
-	 * @param startYear
-	 * @param endMonth
-	 * @param endYear
-	 * @return
-	 */
-	public Transaction[] getPaymentHistory(int startMonth, int startYear, 
-										  int endMonth, int endYear) {
-		return this.transactions;
-	}
-	
-	/**
-	 * 
-	 * @param amount
-	 * @param note
-	 */
-	public void applyPayment(double amount, String note) {
-		
-	}
+
 
 }
