@@ -129,6 +129,7 @@ public class DHCS {
 		}
 		System.out.println(studentRecords.get(1).getStudent().getFirstname());
 	}
+	
 	private String readFile(String fileName) throws Exception
 	{
 		return fileName;
