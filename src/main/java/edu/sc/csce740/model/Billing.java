@@ -59,7 +59,7 @@ public class Billing {
 			}
 		} catch (InvalidPaymentException e) {
 			System.out.println("This is a not a valid payment");
-			;
+			throw new InvalidPaymentException();
 		}
 	}
 
