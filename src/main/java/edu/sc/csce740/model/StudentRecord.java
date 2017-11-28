@@ -33,6 +33,10 @@ public class StudentRecord {
 	 */
 	public StudentRecord() {
 		// TODO Auto-generated constructor stub
+		this.courses = new Course[0];
+		this.transactions = new Transaction[0];
+		student = new StudentDemographics();
+		termBegan = new Term();
 	}
 
 	/**

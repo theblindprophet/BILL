@@ -10,8 +10,8 @@ public class User {
 	
 	// Class variables
 	private String id = "";
-	private String firstname = "";
-	private String lastname = "";
+	private String firstName = "";
+	private String lastName = "";
 	private String role = "";
 	private String college = "";
 	private StudentRecord record = null;
@@ -20,7 +20,7 @@ public class User {
 	 * 
 	 */
 	public User() {
-		// TODO Auto-generated constructor stub
+		this.record = new StudentRecord();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class User {
 	 * @return
 	 */
 	public String getFirstname() {
-		return firstname;
+		return firstName;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class User {
 	 * @param firstname
 	 */
 	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+		this.firstName = firstname;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class User {
 	 * @return
 	 */
 	public String getLastname() {
-		return lastname;
+		return lastName;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class User {
 	 * @param lastname
 	 */
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		this.lastName = lastname;
 	}
 
 	/**

@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import main.java.edu.sc.csce740.BILL;
@@ -26,7 +29,6 @@ public class BILLTest {
 	
 	@Before
     public void beforeClass() {
-        System.out.println("@BeforeClass");
         testerClass = new BILL();
         // Load files
         try {
@@ -249,16 +251,23 @@ public class BILLTest {
 	
 	@Test
 	public void testGenerateBill() {
+		System.out.println("\n\n\n************\nIn testGenerateBill\n************");
+		
 		try {
-			testerClass.generateBill("");
+			testerClass.logIn("mhunt");
+			Gson gson = new Gson();
+			
+			String json = gson.toJson(testerClass.generateBill("mhunt"));
+			System.out.println(json);
 		} catch (Exception e) {
 			fail("testGenerateBill failed: " + e.getMessage());
 		}
+		
+		System.out.println("************\nEnd testGenerateBill\n************\n");
 	}
 	
 	@After
     public void after() {
-        System.out.println("@After");
     }
 
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /**
  * BILL
  * Implementation for the BILL top-level API.
- * Authors: Jamie Gross
  * Last Modified: 11/14/2017
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,7 +71,6 @@ public class BILL implements BILLIntf {
 		_DHCS.setUsers(new Gson().fromJson(
 	    		new FileReader(file), new TypeToken<List<User>>(){}.getType()
 		));
-    		
     }
 
     /**
@@ -86,7 +84,6 @@ public class BILL implements BILLIntf {
         	_DHCS.setStudentRecords(new Gson().fromJson(
         		new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
         	));  
-        		
     }
 
     /**
@@ -243,7 +240,7 @@ public class BILL implements BILLIntf {
      */
     public Bill generateBill(String userId) throws Exception {
     		Bill bill = null;
-    		
+
     		try {
     			User requestee = _DHCS.getUser(userId);
     			
@@ -251,10 +248,10 @@ public class BILL implements BILLIntf {
     				bill = Billing.getBill(requestee);
     			}
     			else {
-    				throw new Exception("TEST");
+    				System.out.println("userID '" + _DHCS.getCurrentUser().getId() + "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");
     			}
     		} catch (Exception e) {
-    			System.out.println("User does not have permission to generate bill.");
+    			System.out.println("Exception occurred in generateBill: " + e.getMessage());
     		}
     		return bill;
     }

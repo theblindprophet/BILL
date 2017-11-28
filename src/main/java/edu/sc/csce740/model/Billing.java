@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.google.gson.Gson;
+
 public class Billing {
 	
 	public static double calculateBalance(Transaction[] transactions)
@@ -37,7 +39,7 @@ public class Billing {
 			chargeList.add(transaction);
 		}
 		
-		return (Transaction[]) chargeList.toArray();
+		return chargeList.toArray(new Transaction[chargeList.size()]);
 	}
 	
 	public static void applyPayment(StudentRecord record, double amount, String note) throws InvalidPaymentException
@@ -72,7 +74,7 @@ public class Billing {
 		ArrayList<Transaction> chargeList = new ArrayList<Transaction>();
 		int numHours = calculateClassHours(user);
 		Calendar c = Calendar.getInstance();
-		final int month = c.get(Calendar.MONTH);
+		final int month = c.get(Calendar.MONTH) + 1;
 		final int day = c.get(Calendar.DATE);
 		final int year = c.get(Calendar.YEAR);
 		StudentRecord SR = user.getRecord();
@@ -148,7 +150,7 @@ public class Billing {
 		// Fees related to class status:
 		//////////////////////////////////////////		
 		
-		if (user.getClass().equals("PHD") || user.getClass().equals("MASTERS")) { 
+		if (user.getRecord().getClassStatus().equals("PHD") || user.getRecord().getClassStatus().equals("MASTERS")) { 
 			// PHD or masters student
 			
 			if (numHours >= 12) { 

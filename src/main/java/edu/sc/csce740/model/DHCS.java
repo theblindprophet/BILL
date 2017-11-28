@@ -42,6 +42,14 @@ public class DHCS {
 
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
+		
+		for (User user : this.users) {
+			for (StudentRecord sr : this.studentRecords) {
+				if (user.getId().equals(sr.getStudent().getId())) {
+					user.setRecord(sr);
+				}
+			}
+		}
 	}
 
 	public ArrayList<StudentRecord> getStudentRecords() {
@@ -50,14 +58,28 @@ public class DHCS {
 
 	public void setStudentRecords(ArrayList<StudentRecord> studentRecords) {
 		this.studentRecords = studentRecords;
+		
+		for (User user : this.users) {
+			for (StudentRecord sr : this.studentRecords) {
+				if (user.getId().equals(sr.getStudent().getId())) {
+					user.setRecord(sr);
+				}
+			}
+		}
 	}
 
 	public User getCurrentUser() {
 		return currentUser;
 	}
 
-	public void setCurrentUser(User currentUser) {
+	public void setCurrentUser(User currentUser) {		
 		this.currentUser = currentUser;
+		
+		for (StudentRecord sr : this.studentRecords) {
+			if (sr.getStudent().getId().equals(this.currentUser.getId())) {
+				this.currentUser.setRecord(sr);
+			}
+		}
 	}
 
 	public User getUser(String userId) throws InvalidUserIdException
@@ -191,7 +213,4 @@ public class DHCS {
 		return validTransArray;
 		
 	}
-	
-	
-
 }
