@@ -253,7 +253,7 @@ public class AVPS
 	}
 	private static boolean isValidStatus(String classStatus) 
 	{
-		if((classStatus.equals("FRESHMAN") || classStatus.equals("SOPHMORE") || 
+		if((classStatus.equals("FRESHMAN") || classStatus.equals("SOPHOMORE") || 
 		   classStatus.equals("JUNIOR") || classStatus.equals("SENIOR") ||
 		   classStatus.equals("MASTERS") || classStatus.equals("PHD") ||
 		   classStatus.equals("GRADUATED")) && isNotNull(classStatus))
