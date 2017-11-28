@@ -54,7 +54,7 @@ public class AVPS
 
 	private static boolean hasPermission_ApplyPayment(User requestor, User requestee) 
 	{
-		if(requestor != null && requestee != null && (requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId()))
+		if(requestor != null && requestee != null && ((requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId())))
 		{
 			return true;
 		}else{
@@ -64,7 +64,7 @@ public class AVPS
 
 	private static boolean hasPermission_ViewCharges(User requestor, User requestee) 
 	{
-		if(requestor != null && requestee != null && (requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId()))
+		if(requestor != null && requestee != null && ((requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId())))
 		{
 			return true;
 		}else{
@@ -74,7 +74,7 @@ public class AVPS
 
 	private static boolean hasPermission_GenerateBill(User requestor, User requestee) 
 	{
-		if(requestor != null && requestee != null && (requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId()))
+		if(requestor != null && requestee != null && ((requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId())))
 		{
 			return true;
 		}else{
@@ -94,7 +94,7 @@ public class AVPS
 
 	private static boolean hasPermission_GetRecord(User requestor, User requestee) 
 	{
-		if(requestor != null && requestee != null && (requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId()))
+		if(requestor != null && requestee != null && ((requestor.getCollege().equals(requestee.getCollege()) && requestor.getRole().equals("ADMIN")) || requestor.getId().equals(requestee.getId())))
 		{
 			return true;
 		}else{
@@ -227,17 +227,17 @@ public class AVPS
 	}
 
 	private static boolean isValidStudyAbroad(String studyAbroad) {
-		if(studyAbroad.equals("REGULAR") || studyAbroad.equals("COHORT") || 
-		   studyAbroad.equals("NONE"))
+		if((studyAbroad.equals("REGULAR") || studyAbroad.equals("COHORT") || 
+		   studyAbroad.equals("NONE")) && isNotNull(studyAbroad)))
 			return true;
 		else
 			return false;
 	}
 
 	private static boolean isValidScholarship(String scholarship) {
-		if(scholarship.equals("WOODROW") || scholarship.equals("DEPARTMENTAL") || 
+		if((scholarship.equals("WOODROW") || scholarship.equals("DEPARTMENTAL") || 
 		   scholarship.equals("GENERAL") || scholarship.equals("ATHLETIC") ||
-		   scholarship.equals("SIMS") || scholarship.equals("NONE"))
+		   scholarship.equals("SIMS") || scholarship.equals("NONE")) && isNotNull(scholarship))
 			return true;
 		else
 			return false;
@@ -245,18 +245,18 @@ public class AVPS
 
 	private static boolean isValidInternationalStatus(String internationalStatus) 
 	{
-		if(internationalStatus.equals("SHORT_TERM") || internationalStatus.equals("SPONSORED") || 
-		   internationalStatus.equals("NONE"))
+		if((internationalStatus.equals("SHORT_TERM") || internationalStatus.equals("SPONSORED") || 
+		   internationalStatus.equals("NONE")) && isNotNull(internationalStatus))
 			return true;
 		else
 			return false;
 	}
 	private static boolean isValidStatus(String classStatus) 
 	{
-		if(classStatus.equals("FRESHMAN") || classStatus.equals("SOPHMORE") || 
+		if((classStatus.equals("FRESHMAN") || classStatus.equals("SOPHMORE") || 
 		   classStatus.equals("JUNIOR") || classStatus.equals("SENIOR") ||
 		   classStatus.equals("MASTERS") || classStatus.equals("PHD") ||
-		   classStatus.equals("GRADUATED"))
+		   classStatus.equals("GRADUATED")) && isNotNull(classStatus))
 			return true;
 		else
 			return false;
@@ -265,7 +265,7 @@ public class AVPS
 	private static boolean isValidTerm(Term termBegan) 
 	{
 		String validYear = "^[1-9][0-9]{3}$";
-		if(termBegan.getSemester().equals("SPRING") || termBegan.getSemester().equals("SUMMER") || termBegan.getSemester().equals("FALL"))
+		if((termBegan.getSemester().equals("SPRING") || termBegan.getSemester().equals("SUMMER") || termBegan.getSemester().equals("FALL")) && isNotNull(termBegan.getSemester()))
 		{
 			
 			if(Integer.toString(termBegan.getYear()).matches(validYear))
@@ -289,7 +289,7 @@ public class AVPS
 
 	private static boolean isValidCollege(String college) 
 	{
-		if(college.equals("ARTS_AND_SCIENCES") || college.equals("ENGINEERING_AND_COMPUTING") || college.equals("GRADUATE_SCHOOL"))
+		if((college.equals("ARTS_AND_SCIENCES") || college.equals("ENGINEERING_AND_COMPUTING") || college.equals("GRADUATE_SCHOOL")) && isNotNull(college))
 			return true;
 		else
 			return false;
