@@ -66,8 +66,7 @@ public class BILL implements BILLIntf {
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public void loadUsers(String usersFile) throws FileNotFoundException, NullPointerException {
-    	ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(usersFile).getFile());
+    		File file = new File(usersFile);
 		_DHCS.setUsers(new Gson().fromJson(
 	    		new FileReader(file), new TypeToken<List<User>>(){}.getType()
 		));
@@ -79,11 +78,11 @@ public class BILL implements BILLIntf {
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public void loadRecords(String recordsFile) throws FileNotFoundException, NullPointerException {
-    		ClassLoader classLoader = getClass().getClassLoader();
-    		File file = new File(classLoader.getResource(recordsFile).getFile());
+    		File file = new File(recordsFile);
         	_DHCS.setStudentRecords(new Gson().fromJson(
         		new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
         	));
+        	_DHCS.setRecordsFile(recordsFile);
     }
 
     /**
@@ -96,7 +95,7 @@ public class BILL implements BILLIntf {
     	
 	    	try {
 	    		User newUser = _DHCS.getUser(userId);
-	    		
+	    		System.out.println(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logInAction));
 		    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), null, logInAction) && newUser != null) {
 		        	_DHCS.setCurrentUser(newUser);
 		    	} else {

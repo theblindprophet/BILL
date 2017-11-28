@@ -44,7 +44,11 @@ public class Billing {
 	
 	public static void applyPayment(StudentRecord record, double amount, String note) throws InvalidPaymentException
 	{
-		Transaction[] newTransactions = new Transaction[record.getTransactions().length+1];
+		int newTransactionsLength = 1;
+		if(record.getTransactions() != null) {
+			newTransactionsLength = record.getTransactions().length + 1;
+		}
+		Transaction[] newTransactions = new Transaction[newTransactionsLength];
 		LocalDateTime today = LocalDateTime.now();
 		
 		Calendar c = Calendar.getInstance();
@@ -59,7 +63,7 @@ public class Billing {
 		{
 			if(isValidPayment)
 			{
-				newTransactions[newTransactions.length -1] = newPayment;
+				newTransactions[newTransactionsLength - 1] = newPayment;
 				record.setTransactions(newTransactions);
 			}
 			else

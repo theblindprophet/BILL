@@ -33,5 +33,40 @@
         "lastName": "Smith",
         "role": "ADMIN",
         "college": "ARTS_AND_SCIENCES"
+    },
+    {
+       "id": "jgross",
+       "firstName": "Jamie",
+       "lastName": "Gross",
+       "role": "STUDENT",
+       "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "lmurray",
+        "firstName": "Logan",
+        "lastName": "Murray",
+        "role": "GRADUATE_SCHOOL",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "pbarbare",
+        "firstName": "Preston",
+        "lastName": "Barbare",
+        "role": "GRADUATE_SCHOOL",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "kwooten",
+        "firstName": "Kaylee",
+        "lastName": "Wooten",
+        "role": "STUDENT",
+        "college": "ARTS_AND_SCIENCES"
+    },
+    {
+        "id": "dtrump",
+        "firstName": "Donald",
+        "lastName": "Trump",
+        "role": "ADMIN",
+        "college": "ARTS_AND_SCIENCES"
     }
 ]

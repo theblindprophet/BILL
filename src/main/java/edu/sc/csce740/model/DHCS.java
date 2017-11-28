@@ -139,7 +139,6 @@ public class DHCS {
 	{
 		Gson gson = new Gson();
 		String json = gson.toJson(this.studentRecords);
-		System.out.println(json);
 		try {
 			File file = new File(fileName);
 			if (file.exists())
