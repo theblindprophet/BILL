@@ -6,13 +6,13 @@
 
 package main.java.edu.sc.csce740.model;
 
+import java.util.Date;
+
 public class Transaction {
 
 	// Class variables
 	private String type = "";
-	private int transactionMonth = 0;
-	private int transactionDay = 0;
-	private int transactionYear = 0;
+	private TransactionDate transactionDate;
 	private double amount = 0.0;
 	private String note = "";
 	
@@ -21,13 +21,15 @@ public class Transaction {
 	 */
 	public Transaction() {
 		// TODO Auto-generated constructor stub
+		transactionDate = new TransactionDate();
 	}
 
 	public Transaction(String type, int transMonth, int transDay, int transYear, double amount, String note) {
+		this();
 		this.type = type;
-		this.transactionMonth = transMonth;
-		this.transactionDay = transDay;
-		this.transactionYear = transYear;
+		this.transactionDate.setMonth(transMonth);
+		this.transactionDate.setDay(transDay);
+		this.transactionDate.setYear(transYear);
 		this.amount = amount;
 		this.note = note;
 	}
@@ -52,7 +54,7 @@ public class Transaction {
 	 * @return
 	 */
 	public int getTransactionMonth() {
-		return transactionMonth;
+		return this.transactionDate.getMonth();
 	}
 
 	/**
@@ -60,7 +62,7 @@ public class Transaction {
 	 * @param transactionMonth
 	 */
 	public void setTransactionMonth(int transactionMonth) {
-		this.transactionMonth = transactionMonth;
+		this.transactionDate.setMonth(transactionMonth);
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class Transaction {
 	 * @return
 	 */
 	public int getTransactionDay() {
-		return transactionDay;
+		return this.transactionDate.getDay();
 	}
 
 	/**
@@ -76,7 +78,7 @@ public class Transaction {
 	 * @param transactionDay
 	 */
 	public void setTransactionDay(int transactionDay) {
-		this.transactionDay = transactionDay;
+		this.transactionDate.setDay(transactionDay);
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class Transaction {
 	 * @return
 	 */
 	public int getTransactionYear() {
-		return transactionYear;
+		return this.transactionDate.getYear();
 	}
 
 	/**
@@ -92,7 +94,7 @@ public class Transaction {
 	 * @param transactionYear
 	 */
 	public void setTransactionYear(int transactionYear) {
-		this.transactionYear = transactionYear;
+		this.transactionDate.setYear(transactionYear);
 	}
 
 	/**
@@ -126,9 +128,29 @@ public class Transaction {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String toString()
-	{
-		return type + "-" + transactionMonth + "-" + transactionYear + "-" + transactionYear + "-" + amount + "-" + note;
-	}
 
+	public class TransactionDate {
+		private int month = 0;
+		private int day = 0;
+		private int year = 0;
+		
+		public int getDay() {
+			return day;
+		}
+		public void setDay(int day) {
+			this.day = day;
+		}
+		public int getMonth() {
+			return month;
+		}
+		public void setMonth(int month) {
+			this.month = month;
+		}
+		public int getYear() {
+			return year;
+		}
+		public void setYear(int year) {
+			this.year = year;
+		}
+	}
 }

@@ -127,7 +127,6 @@ public class DHCS {
 		{
 			System.out.println("Invalid User Id to update record");
 		}
-		System.out.println(studentRecords.get(1).getStudent().getFirstname());
 	}
 	private String readFile(String fileName) throws Exception
 	{

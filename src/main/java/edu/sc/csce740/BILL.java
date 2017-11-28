@@ -83,7 +83,7 @@ public class BILL implements BILLIntf {
     		File file = new File(classLoader.getResource(recordsFile).getFile());
         	_DHCS.setStudentRecords(new Gson().fromJson(
         		new FileReader(file), new TypeToken<List<StudentRecord>>(){}.getType()
-        	));  
+        	));
     }
 
     /**
