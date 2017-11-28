@@ -200,10 +200,10 @@ public class Billing {
 				}
 				
 				// Health center fees
-				//		12 hour and less fee is mandatory, then there are additional charges for 6 to 8 and 9 to 11 hours
-				chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_GRAD_ASSISTANT_HEALTH_CENTER_LESS), Fee.getFeeNote(EnumFee.PT_GRAD_ASSISTANT_HEALTH_CENTER_LESS)));
-				
-				if (numHours >= 9 && numHours <= 11) {
+				//		12 hour and less fee is mandatory for graduate ASSISTANTS
+				if (user.getRecord().isGradAssistant()) {
+					chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_GRAD_ASSISTANT_HEALTH_CENTER_LESS), Fee.getFeeNote(EnumFee.PT_GRAD_ASSISTANT_HEALTH_CENTER_LESS)));
+				} else if (numHours >= 9 && numHours <= 11) {
 					chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_GRAD__HEALTH_CENTER_9_TO_11_HOURS), Fee.getFeeNote(EnumFee.PT_GRAD__HEALTH_CENTER_9_TO_11_HOURS)));
 				} else if (numHours >= 6 && numHours <= 8) {
 					chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.PT_GRAD__HEALTH_CENTER_6_TO_8_HOURS), Fee.getFeeNote(EnumFee.PT_GRAD__HEALTH_CENTER_6_TO_8_HOURS)));

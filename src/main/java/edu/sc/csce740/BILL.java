@@ -162,7 +162,7 @@ public class BILL implements BILLIntf {
     	    		throw new AdminRightsException();
         		}
         	} catch(AdminRightsException e) {
-        		System.out.println("User is not an admin");
+        		System.out.println(_DHCS.getCurrentUser().getId() + " is not an admin");
         		throw new AdminRightsException();
         	} catch(Exception e) {
         		System.out.println("Exception in getStudentIDs: " + e.getMessage());
@@ -190,7 +190,7 @@ public class BILL implements BILLIntf {
     	}
     	catch(GetRecordException e)
     	{
-    		System.out.println("User does not have correct priviledges to get record");
+    		System.out.println("userID '" + _DHCS.getCurrentUser().getId() + "' does not have the appropriate privileges to getRecord for userId '" + userId + "'");
     		throw new GetRecordException();
     	}
     	catch(Exception e) {
@@ -222,7 +222,7 @@ public class BILL implements BILLIntf {
     	}
     	catch(AdminRightsException e)
     	{
-    		System.out.println("User is not a valid Admin for this student");
+    		System.out.println("userID '" + _DHCS.getCurrentUser().getId() + "' does not have the appropriate privileges to editRecord for userId '" + userId + "'");
     		throw new AdminRightsException();
     	}
     	catch(EditRecordException e) {
