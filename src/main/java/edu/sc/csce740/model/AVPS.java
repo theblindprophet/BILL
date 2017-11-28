@@ -228,7 +228,7 @@ public class AVPS
 
 	private static boolean isValidStudyAbroad(String studyAbroad) {
 		if((studyAbroad.equals("REGULAR") || studyAbroad.equals("COHORT") || 
-		   studyAbroad.equals("NONE")) && isNotNull(studyAbroad)))
+		   studyAbroad.equals("NONE")) && isNotNull(studyAbroad))
 			return true;
 		else
 			return false;

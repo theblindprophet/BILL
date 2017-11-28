@@ -257,7 +257,7 @@ public class BILLTest {
 			testerClass.logIn("jsmith");
 			Gson gson = new Gson();
 			
-			String json = gson.toJson(testerClass.generateBill("jsmith"));
+			String json = gson.toJson(testerClass.generateBill("mhunt"));
 			System.out.println(json);
 		} catch (Exception e) {
 			fail("testGenerateBill failed: " + e.getMessage());
