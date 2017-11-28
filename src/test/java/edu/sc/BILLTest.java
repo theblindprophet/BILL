@@ -3,14 +3,17 @@ package test.java.edu.sc;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-
-import java.util.List;
 
 import main.java.edu.sc.csce740.BILL;
 import main.java.edu.sc.csce740.model.Bill;
@@ -22,11 +25,15 @@ import main.java.edu.sc.csce740.model.InvalidUserIdException;
 import main.java.edu.sc.csce740.model.AdminRightsException;
 import main.java.edu.sc.csce740.model.GetRecordException;
 import main.java.edu.sc.csce740.model.EditRecordException;
+import main.java.edu.sc.csce740.model.InvalidPaymentException;
 
 public class BILLTest {
 	
 	static BILL testerClass;
 	
+	/**
+	 * Load users and students and logout before each test
+	 */
 	@Before
     public void before() {
         testerClass = new BILL();
@@ -45,22 +52,28 @@ public class BILLTest {
      	testerClass.logOut();
     }
 	
+	/**
+	 * Login to user
+	 */
 	@Test
 	public void testLoginLogout() {
 		// Login
         try {
         		testerClass.logIn("mhunt");
         } catch(InvalidUserIdException e) {
-        		fail("yeah, this did not work.");
+        		fail("Fail: InvalidUserIdException.");
         }
 	}
 	
+	/**
+	 * Login to user that does not exist
+	 */
 	@Test
 	public void testLoginInvalid() {
 		// Login
         try {
         		testerClass.logIn("apples");
-        		fail("yeah, this did not work.");
+        		fail("Fail: We should have not got to this point.");
         } catch(InvalidUserIdException e) {
         		
         } catch(Exception e) {
@@ -68,48 +81,56 @@ public class BILLTest {
         }
 	}
 	
+	/**
+	 * Get user that is logged in user
+	 */
 	@Test
 	public void testGetUser() {
 		// Login
         try {
         		testerClass.logIn("mhunt");
         } catch(InvalidUserIdException e) {
-        		fail("yeah, this did not work.");
+        		fail("Fail: InvalidUserIdException.");
         }
 		String id = testerClass.getUser();
-		System.out.println(id);
 		assertEquals("mhunt", id);
 	}
 	
+	/**
+	 * Get user that admin has permissions for
+	 */
 	@Test
 	public void testGetStudentIDsAdmin() {
 		// Login
 		try {
 			testerClass.logIn("rbob");
 		} catch(InvalidUserIdException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: InvalidUserIdException.");
 		}
 		try {
 			List<String> studentIDs = testerClass.getStudentIDs();
 			assertEquals("ggay", studentIDs.get(0));
 		} catch(AdminRightsException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: AdminRightsException.");
 		} catch(Exception e) {
-			fail("yeah, this did not work.");
+			fail("Fail: Exception.");
 		}
 	}
 	
+	/**
+	 * Get user that logged in user does not have permission for
+	 */
 	@Test
 	public void testGetStudentIDsNotAdmin() {
 		// Login
 		try {
 			testerClass.logIn("mhunt");
 		} catch(InvalidUserIdException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: InvalidUserIdException.");
 		}
 		try {
 			testerClass.getStudentIDs();
-			fail("yeah, this did not work.");
+			fail("Fail: We should have not got to this point.");
 		} catch(AdminRightsException e) {
 			
 		} catch(Exception e) {
@@ -117,13 +138,16 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Get record of user that admin has permission for
+	 */
 	@Test
 	public void testGetRecord() {
 		// Login
 		try {
 			testerClass.logIn("rbob");
 		} catch(InvalidUserIdException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: InvalidUserIdException.");
 		}
 		try {
 			StudentRecord testStudent = testerClass.getRecord("ggay");
@@ -131,23 +155,26 @@ public class BILLTest {
 			assertEquals("ENGINEERING_AND_COMPUTING", testStudent.getCollege());
 			assertEquals(2016, testStudent.getTermBegan().getYear());
 		} catch(GetRecordException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: GetRecordException.");
 		} catch(Exception e) {
-			fail("yeah, this did not work.");
+			fail("Fail: Exception.");
 		}
 	}
 	
+	/**
+	 * Get record of user that student does not have permission for
+	 */
 	@Test
-	public void testGetRecordIsNotAdmin() {
+	public void testGetRecordNoPermissionStudent() {
 		// Login
 		try {
 			testerClass.logIn("mhunt");
 		} catch(InvalidUserIdException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: InvalidUserIdException.");
 		}
 		try {
 			testerClass.getRecord("ggay");
-			fail("yeah, this did not work.");
+			fail("Fail: We should have not got to this point.");
 		} catch(GetRecordException e) {
 			
 		} catch(Exception e) {
@@ -155,17 +182,20 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Get record of user that admin does not have permission for
+	 */
 	@Test
-	public void testGetRecordNoPermissionForStudent() {
+	public void testGetRecordNoPermissionAdmin() {
 		// Login
 		try {
 			testerClass.logIn("rbob");
 		} catch(InvalidUserIdException e) {
-			fail("yeah, this did not work.");
+			fail("Fail: InvalidUserIdException.");
 		}
 		try {
 			testerClass.getRecord("mhunt");
-			fail("yeah, this did not work.");
+			fail("Fail: We should have not got to this point.");
 		} catch(GetRecordException e) {
 			
 		} catch(Exception e) {
@@ -173,18 +203,30 @@ public class BILLTest {
 		}
 	}
 	
+	/**
+	 * Edit record without writing
+	 */
 	@Test
 	public void testEditRecordNotPermnanent() {
 		this.testEditRecord(false, "rbob", false);
 	}
+	/**
+	 * Edit record with writing
+	 */
 	@Test
 	public void testEditRecordPermnanent() {
 		this.testEditRecord(true, "rbob", false);
 	}
+	/**
+	 * Edit record with logged in user that does not have permission
+	 */
 	@Test
 	public void testEditRecordInvalidPermission() {
 		this.testEditRecord(false, "jgross", true);
 	}
+	/**
+	 * Edit record with 3 different invalid values
+	 */
 	@Test
 	public void testEditRecordInvalidValues() {
 		this.testEditRecordInvalid("state", "Edit Record error: Not valid address state");
@@ -194,12 +236,19 @@ public class BILLTest {
 		this.testEditRecordInvalid("scholarship", "Edit Record error: Not valid scholarship");
 	}
 	
+	/**
+	 * Edit record
+	 * 
+	 * @param permanent		To write or not write to file
+	 * @param user			User to edit record of
+	 * @param shouldFail		If this test should fail
+	 */
 	public void testEditRecord(boolean permanent, String user, boolean shouldFail) {
 		// Login
 		try {
 			testerClass.logIn(user);
 		} catch(InvalidUserIdException e) {
-			fail(e.getMessage());
+			fail("Fail: InvalidUserIdException.");
 		}
 		StudentRecord testStudent = new StudentRecord();
 		StudentDemographics testStudentStudent = new StudentDemographics();
@@ -234,15 +283,15 @@ public class BILLTest {
 			testStudent.setCourses(testStudentCourses);
 			testerClass.editRecord("ggay", testStudent, permanent);
 			if(shouldFail) {
-				fail("yeah, this did not work.");
+				fail("Fail: We should have not got to this point.");
 			}
 		} catch(AdminRightsException e) {
 			if(!shouldFail) {
-				fail(e.getMessage());
+				fail("Fail: AdminRightsException.");
 			}
 		} catch(Exception e) {
 			if(!shouldFail) {
-				fail(e.getMessage());
+				fail("Fail: Exception.");
 			}
 		}
 		
@@ -257,22 +306,27 @@ public class BILLTest {
 			assertEquals("SPONSORED", retrievedStudent.getInternationalStatus());
 		} catch(GetRecordException e) {
 			if(!shouldFail) {
-				fail(e.getMessage());
+				fail("Fail: GetRecordException.");
 			}
 		} catch(Exception e) {
 			if(!shouldFail) {
-				fail(e.getMessage());
+				fail("Fail: Exception.");
 			}
 		}
 	}
 	
+	/**
+	 * Edit record with invalid value
+	 * 
+	 * @param value		Field to edit
+	 * @param error		The error it should throw
+	 */
 	public void testEditRecordInvalid(String value, String error) {
 		// Login
 		try {
 			testerClass.logIn("rbob");
 		} catch(InvalidUserIdException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
+			fail("Fail: InvalidUserIdException.");
 		}
 		StudentRecord testStudent = new StudentRecord();
 		StudentDemographics testStudentStudent = new StudentDemographics();
@@ -318,26 +372,171 @@ public class BILLTest {
 			testStudent.setTermBegan(testStudentTermBegan);
 			testStudent.setCourses(testStudentCourses);
 			testerClass.editRecord("ggay", testStudent, false);
-			fail("yeah, this did not work.");
+			fail("Fail: We should have not got to this point.");
 		} catch(AdminRightsException e) {
-			
+			fail("Fail: AdminRightsException.");
 		} catch(EditRecordException e) {
 			assertEquals(error, e.getMessage());
+		} catch(Exception e) {
+			fail("Fail: Exception.");
+		}
+	}
+	
+	/**
+	 * Apply a new payment to a user and generate the bill that logged in user has permission for
+	 */
+	@Test
+	public void testApplyPaymentGenerateBill() {
+		// Login
+		try {
+			testerClass.logIn("ggay");
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			testerClass.applyPayment("ggay", 5000, "Limes");
+		} catch(AdminRightsException e) {
+			fail("Fail: We should have not got to this point.");
+		} catch(Exception e) {
+			fail("Fail: We should have not got to this point.");
+		}
+		try {
+			Gson gson = new Gson();
+			String json = gson.toJson(testerClass.generateBill("ggay"));
+			File file = new File("src/test/resources/bill.txt");
+			if (file.exists())
+			{
+			   file.delete();
+			}
+			FileWriter writer = new FileWriter(file);
+			writer.write(json);
+			writer.close();
+		} catch (IOException e) {
+			fail("Fail: We should have not got to this point.");
+		} catch(AdminRightsException e) {
+			fail("Fail: We should have not got to this point.");
+		} catch(Exception e) {
+			fail("Fail: We should have not got to this point.");
+		}
+	}
+	
+	/**
+	 * Apply a payment to user that logged in user has no permission for
+	 */
+	@Test
+	public void testApplyPaymentNoPermission() {
+		// Login
+		try {
+			testerClass.logIn("ggay");
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			testerClass.applyPayment("jgross", 5000, "Apples");
+			fail("Fail: We should have not got to this point.");
+		} catch(AdminRightsException e) {
+					
+		} catch(Exception e) {
+					
+		}
+	}
+	
+	/**
+	 * Apply invalid payment amount
+	 */
+	@Test
+	public void testApplyPaymentInvalid() {
+		// Login
+		try {
+			testerClass.logIn("ggay");
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			testerClass.applyPayment("jgross", -5000, "Apples");
+			fail("Fail: We should have not got to this point.");
+		} catch(AdminRightsException e) {
+					
+		} catch(InvalidPaymentException e) {
+			
+		} catch(Exception e) {
+					
+		}
+	}
+	
+	/**
+	 * Generate bill for user that logged in user does not have permission for
+	 */
+	@Test
+	public void testGenerateBillNoPermission() {
+		// Login
+		try {
+			testerClass.logIn("ggay");
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			Gson gson = new Gson();
+			String json = gson.toJson(testerClass.generateBill("mhunt"));
+			File file = new File("src/test/resources/bill.txt");
+			if (file.exists())
+			{
+			   file.delete();
+			}
+			FileWriter writer = new FileWriter(file);
+			writer.write(json);
+			writer.close();
+			fail("Fail: We should have not got to this point.");
+		} catch (IOException e) {
+			
+		} catch(AdminRightsException e) {
+			
 		} catch(Exception e) {
 			
 		}
 	}
 	
+	/**
+	 * View charges for user that does have permission
+	 */
 	@Test
-	public void testGenerateBill() {
+	public void testViewCharges() {
+		// Login
+		try {
+			testerClass.logIn("mhunt");
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			Bill charges = testerClass.viewCharges("mhunt", 10, 16, 2016, 5, 1, 2018);
+			assertEquals(-2000, charges.getBalance(), 0.01);
+			assertEquals("PHD", charges.getClassStatus());
+			assertEquals(2000, charges.getTransactions()[0].getAmount(), 0.01);
+		} catch(AdminRightsException e) {
+			fail("Fail: AdminRightsException.");
+		} catch(Exception e) {
+			fail("Fail: Exception.");
+		}
+	}
+	
+	/**
+	 * View charges for user that logged in student user does not have permission for
+	 */
+	@Test
+	public void testViewChargesNoPermissionForStudent() {
+		// Login
 		try {
 			testerClass.logIn("ggay");
-			testerClass.applyPayment("ggay", 5000, "Titties");
-			Gson gson = new Gson();
+		} catch(InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			testerClass.viewCharges("mhunt", 10, 16, 2016, 5, 1, 2018);
+			fail("Fail: We should have not got to this point.");
+		} catch(AdminRightsException e) {
 			
-			String json = gson.toJson(testerClass.generateBill("ggay"));
-		} catch (Exception e) {
-			fail("testGenerateBill failed: " + e.getMessage());
+		} catch(Exception e) {
+			
 		}
 	}
 	

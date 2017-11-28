@@ -210,6 +210,5 @@ public class DHCS {
 		}		
 		validTransArray = validTrans.toArray(validTransArray);
 		return validTransArray;
-		
 	}
 }

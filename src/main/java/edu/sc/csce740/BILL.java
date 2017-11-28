@@ -43,6 +43,7 @@ import main.java.edu.sc.csce740.model.DHCS;
 import main.java.edu.sc.csce740.model.GetRecordException;
 import main.java.edu.sc.csce740.model.EditRecordException;
 import main.java.edu.sc.csce740.model.InvalidUserIdException;
+import main.java.edu.sc.csce740.model.InvalidPaymentException;
 import main.java.edu.sc.csce740.model.StudentRecord;
 import main.java.edu.sc.csce740.model.Transaction;
 import main.java.edu.sc.csce740.model.User;
@@ -245,12 +246,16 @@ public class BILL implements BILLIntf {
     			
     			if (AVPS.hasPermission(_DHCS.getCurrentUser(), requestee, Action.GenerateBill)) {
     				bill = Billing.getBill(requestee);
+    				Gson gson = new Gson();
+    				String json = gson.toJson(bill);
     			}
     			else {
     				System.out.println("userID '" + _DHCS.getCurrentUser().getId() + "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");
+    				throw new AdminRightsException();
     			}
     		} catch (Exception e) {
     			System.out.println("Exception occurred in generateBill: " + e.getMessage());
+    			throw new Exception(e);
     		}
     		return bill;
     }
@@ -272,23 +277,22 @@ public class BILL implements BILLIntf {
                             int endMonth, int endDay, int endYear) throws Exception {
 		
 		Action viewChargesAction = Action.ViewCharges;
-    	try{
-	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), viewChargesAction))
+		try{
+		    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), viewChargesAction))
+		    	{
+		    		StudentRecord record = _DHCS.getRecord(userId);
+		    		Transaction[] transArray = _DHCS.getCharges(userId, startMonth, startDay, startYear, endMonth, endDay, endYear);
+		        	Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), transArray);
+		    		return charges;
+		    	}else{
+		    		throw new AdminRightsException();
+		    	}
+	    	}
+	    	catch(AdminRightsException e)
 	    	{
-	    		StudentRecord record = _DHCS.getRecord(userId);
-	    		Transaction[] transArray = _DHCS.getCharges(userId, startMonth, startDay, startYear, endMonth, endDay, endYear);
-	        	Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), transArray);
-	    
-	    		return charges;
-	    	}else{
+	    		System.out.println("User is not a valid Admin for this student");
 	    		throw new AdminRightsException();
 	    	}
-    	}
-    	catch(AdminRightsException e)
-    	{
-    		System.out.println("User is not a valid Admin for this student");
-    		return null;
-    	}
     }
 
     /**
@@ -302,21 +306,23 @@ public class BILL implements BILLIntf {
      */
     public void applyPayment(String userId, double amount, String note)
             throws Exception {
-    	Action applyPaymentAction = Action.ApplyPayment;
-    	try{
-	    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), applyPaymentAction))
+    		Action applyPaymentAction = Action.ApplyPayment;
+    		try{
+		    	if(AVPS.hasPermission(_DHCS.getCurrentUser(), _DHCS.getUser(userId), applyPaymentAction))
+		    	{
+		    		StudentRecord record = _DHCS.getRecord(userId);
+		    		Billing.applyPayment(record, amount, note);
+		    	}else{
+		    		throw new AdminRightsException();
+		    	}
+	    	}
+	    	catch(AdminRightsException e)
 	    	{
-	    		StudentRecord record = _DHCS.getRecord(userId);
-	    		Billing.applyPayment(record, amount, note);
-	    	}else{
 	    		throw new AdminRightsException();
 	    	}
-    	}
-    	catch(AdminRightsException e)
-    	{
-    		System.out.println("User is not a valid Admin for this student");
-    	}
+    		catch(InvalidPaymentException e)
+	    	{
+	    		throw new InvalidPaymentException();
+	    	}
     }
-
-
 }
