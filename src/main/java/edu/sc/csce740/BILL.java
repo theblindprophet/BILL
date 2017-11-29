@@ -262,8 +262,6 @@ public class BILL implements BILLIntf {
 
 			if (AVPS.hasPermission(_DHCS.getCurrentUser(), requestee, Action.GenerateBill)) {
 				bill = Billing.getBill(requestee);
-				Gson gson = new Gson();
-				String json = gson.toJson(bill);
 			} else {
 				System.out.println("userID '" + _DHCS.getCurrentUser().getId()
 						+ "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");

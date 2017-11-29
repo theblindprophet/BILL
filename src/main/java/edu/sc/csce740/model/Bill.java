@@ -16,6 +16,7 @@ public class Bill {
 	private String college = "";
 	private String classStatus = "";
 	private Transaction[] transactions;
+	private double balance = 0.0;
 
 	/*
 	 * Constructor
@@ -36,6 +37,7 @@ public class Bill {
 		this.college = college;
 		this.classStatus = classStatus;
 		this.transactions = transactions;
+		this.balance = Billing.calculateBalance(transactions);
 	}
 
 	/*************** GETTERS AND SETTERS ****************/
@@ -110,6 +112,7 @@ public class Bill {
 	 */
 	public void setTransactions(Transaction[] transactions) {
 		this.transactions = transactions;
+		this.balance = Billing.calculateBalance(transactions);
 	}
 
 }

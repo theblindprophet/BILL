@@ -575,6 +575,22 @@ public class BILLTest {
 
 		}
 	}
+	
+	@Test
+	public void testGenerateBill() {
+		// Login
+		try {
+			testerClass.logIn("mhunt");
+		} catch (InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		
+		try {
+			testerClass.generateBill("mhunt");
+		} catch(Exception e) {
+			fail("Fail: mhunt should be able to generate bill for mhunt.");
+		}
+	}
 
 	@After
 	public void after() {
