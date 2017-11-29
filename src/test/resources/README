@@ -1,0 +1,22 @@
+Notes on data files:
+
+These files are in the JSON format. To read them into BILL, it is easiest to use Google's GSON library, which can be downloaded from here: http://code.google.com/p/google-gson/
+
+For example, to deserialize (read text into object model):
+ 
+List<StudentRecord> studentRecords = new Gson().fromJson( new FileReader( new File("students.txt")), new TypeToken<List<StudentRecord>>(){}.getType());
+
+and then to serialize (write object model back to text):
+
+String representation = new GsonBuilder().setPrettyPrinting().create().toJson(studentRecords);
+(you can then use your preferred Java file writing method, or manipulate the string)
+
+----------------------
+
+For the project, you will need to read in:
+students.txt (student records)
+users.txt (user permissions)
+
+bill.txt is an example of a bill written back to a file. You don't need to read it into your system. It is just included as an example. 
+
+You WILL need to add examples. We have given you a basic sample, but it is insufficient to reflect the different plans and corner cases of this system. Ask us if you have any questions.
