@@ -5,6 +5,13 @@ import java.util.Calendar;
 
 public class Billing {
 
+	/**
+	 * Calculates balance by summing all payments and that
+	 * from the sum of all charges for a given transaction array.
+	 * 
+	 * @param transactions Transactions for which the balance is being calculated
+	 * @return The balance
+	 */
 	public static double calculateBalance(Transaction[] transactions) {
 		double total = 0;
 		for (int i = 0; i < transactions.length; i++) {
@@ -18,12 +25,27 @@ public class Billing {
 		return total;
 	}
 
+	/**
+	 * Generates a Bill, comprised of both applicable current charges and historical
+	 * charges for a given user by calling calculateCharges(...).
+	 * 
+	 * @param user User for which the bill is being calculated
+	 * @return Bill for the user
+	 */
 	public static Bill getBill(User user) {
 		return new Bill(user.getRecord().getStudent(), user.getCollege(), user.getRecord().getClassStatus(),
 				calculateCharges(user));
 	}
 
-	public static Transaction[] calculateCharges(User user) {
+	/**
+	 * Gets all applicable fees based on logic coming from the USC fee schedule 
+	 * (by calling calculateCurrentCharges), and combines them with the fees already 
+	 * on the student record
+	 * 
+	 * @param user User for which bill is being generated
+	 * @return Transaction[] representing merge of current charges and historical charges
+	 */
+	private static Transaction[] calculateCharges(User user) {
 		ArrayList<Transaction> chargeList = new ArrayList<Transaction>();
 		Transaction[] userTrans = user.getRecord().getTransactions();
 
@@ -36,6 +58,14 @@ public class Billing {
 		return chargeList.toArray(new Transaction[chargeList.size()]);
 	}
 
+	/**
+	 * Applies payment to a given student record.
+	 * 
+	 * @param record The student record for which the payment should be applied
+	 * @param amount Amount of payment
+	 * @param note Description of payment
+	 * @throws InvalidPaymentException
+	 */
 	public static void applyPayment(StudentRecord record, double amount, String note) throws InvalidPaymentException {
 		int newTransactionsLength = 1;
 		if (record.getTransactions() != null) {
@@ -63,6 +93,13 @@ public class Billing {
 		}
 	}
 
+	/**
+	 * Gets all applicable fees based on logic coming from the USC fee schedule, 
+	 * and combines them with the fees already on the student record
+	 * 
+	 * @param user User for which current charges are being calculated
+	 * @return List of all applicable current charges
+	 */
 	private static ArrayList<Transaction> calculateCurrentCharges(User user) {
 		ArrayList<Transaction> chargeList = new ArrayList<Transaction>();
 		int numHours = calculateClassHours(user);
@@ -102,20 +139,7 @@ public class Billing {
 			termNow.setSemester("FALL");
 		}
 
-		if (SR.getCapstoneEnrolled() != null && SR.getCapstoneEnrolled().termDifference(termNow) <= 3) { // If
-																											// the
-																											// current
-																											// term
-																											// is
-																											// 3
-																											// or
-																											// less
-																											// semesters
-																											// away
-																											// from
-																											// the
-																											// enrollment
-																											// date
+		if (SR.getCapstoneEnrolled() != null && SR.getCapstoneEnrolled().termDifference(termNow) <= 3) { // If																						// date
 			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.CAPSTONE_PER_SEMESTER),
 					Fee.getFeeNote(EnumFee.CAPSTONE_PER_SEMESTER)));
 		}
@@ -394,12 +418,17 @@ public class Billing {
 			// (Do nothing)
 		} else {
 			System.out.println("Student is not PHD, MASTERS, FRESHMAN, SOPHOMORE, JUNIOR, or SENIOR");
-
 		}
 
 		return chargeList;
 	}
 
+	/**
+	 * Calculates total number of class hours for a given User
+	 * 
+	 * @param user The user
+	 * @return Total number of class hours for user
+	 */
 	private static int calculateClassHours(User user) {
 		int numHours = 0;
 		if (user != null && user.getRecord() != null && user.getRecord().getCourses() != null) {
@@ -411,6 +440,12 @@ public class Billing {
 		return numHours;
 	}
 
+	/**
+	 * Calculates total number of online class hours for a given User
+	 * 
+	 * @param user The user
+	 * @return Total number of online class hours for user
+	 */
 	private static int calculateOnlineClassHours(User user) {
 		int numHours = 0;
 		if (user != null && user.getRecord() != null && user.getRecord().getCourses() != null) {
@@ -424,6 +459,13 @@ public class Billing {
 		return numHours;
 	}
 
+	/**
+	 * Searches for a transaction of type feeType within an array of Transaction.
+	 * 
+	 * @param transactions Array in which to search
+	 * @param feeType Fee type for which to search for
+	 * @return The matching Transaction if a match is found, else null
+	 */
 	private static Transaction findHistoricalTransaction(Transaction[] transactions, EnumFee feeType) {
 		String feeNote = Fee.getFeeNote(feeType);
 
