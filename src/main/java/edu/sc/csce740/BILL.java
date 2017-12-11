@@ -265,7 +265,7 @@ public class BILL implements BILLIntf {
 				throw new AdminRightsException("userID '" + userId + "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");
 			}
 		} catch (Exception e) {
-			System.out.println("BILL API message: Exception occurred in generateBill: " + e.getMessage());
+			throw new Exception(e);
 		}
 		return bill;
 	}

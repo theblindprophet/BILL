@@ -451,7 +451,9 @@ public class BILLTest {
 			fail("Fail: We should have not got to this point.");
 		} catch (AdminRightsException e) {
 			fail("Fail: We should have not got to this point.");
-		} catch (Exception e) {
+		} catch (InvalidPaymentException e) {
+			fail("Fail: We should have not got to this point.");
+		} catch(Exception e) {
 			fail("Fail: We should have not got to this point.");
 		}
 	}
@@ -481,7 +483,7 @@ public class BILLTest {
 	 * Apply invalid payment amount
 	 */
 	@Test
-	public void testApplyPaymentInvalid() {
+	public void testApplyPaymentInvalidPrice() {
 		// Login
 		try {
 			testerClass.logIn("ggay");
@@ -490,6 +492,29 @@ public class BILLTest {
 		}
 		try {
 			testerClass.applyPayment("jgross", -5000, "Apples");
+			fail("Fail: We should have not got to this point.");
+		} catch (AdminRightsException e) {
+
+		} catch (InvalidPaymentException e) {
+
+		} catch (Exception e) {
+
+		}
+	}
+	
+	/**
+	 * Apply invalid payment amount
+	 */
+	@Test
+	public void testApplyPaymentInvalidNote() {
+		// Login
+		try {
+			testerClass.logIn("ggay");
+		} catch (InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			testerClass.applyPayment("jgross", 5000, null);
 			fail("Fail: We should have not got to this point.");
 		} catch (AdminRightsException e) {
 
@@ -514,13 +539,6 @@ public class BILLTest {
 		try {
 			Gson gson = new Gson();
 			String json = gson.toJson(testerClass.generateBill("mhunt"));
-			File file = new File("src/test/resources/bill.txt");
-			if (file.exists()) {
-				file.delete();
-			}
-			FileWriter writer = new FileWriter(file);
-			writer.write(json);
-			writer.close();
 			fail("Fail: We should have not got to this point.");
 		} catch (IOException e) {
 
@@ -544,7 +562,7 @@ public class BILLTest {
 		}
 		try {
 			Bill charges = testerClass.viewCharges("mhunt", 10, 16, 2016, 5, 1, 2018);
-			assertEquals(-2000, charges.getBalance(), 0.01);
+			assertEquals(2000, charges.getBalance(), 0.01);
 			assertEquals("PHD", charges.getClassStatus());
 			assertEquals(2000, charges.getTransactions()[0].getAmount(), 0.01);
 		} catch (AdminRightsException e) {

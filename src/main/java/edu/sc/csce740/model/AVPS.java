@@ -287,18 +287,21 @@ public class AVPS {
 	 */
 	public static boolean isValidTransaction(Transaction transaction) {
 		// regex for determining the format of the date
-		String validYear = "^[1-9][0-9]{4}$";
+		String validYear = "^[1-9][0-9]{3}$";
 		String validDay = "^(3[0-1]|2[0-9]|1[0-9]|0[1-9])$";
 		String validMonth = "^(1[0-2]|0[1-9])$";
 
-		if (isNotNull(transaction.getNote()) || transaction.getAmount() >= 0.0
-				|| (transaction.getType().equals("PAYMENT") || transaction.getType().equals("CHARGE"))
-				|| Integer.toString(transaction.getTransactionDay()).matches(validDay)
-				|| Integer.toString(transaction.getTransactionMonth()).matches(validMonth)
-				|| Integer.toString(transaction.getTransactionYear()).matches(validYear))
+		if (isNotNull(transaction.getNote()) && transaction.getAmount() >= 0.0
+				&& (transaction.getType().equals("PAYMENT") || transaction.getType().equals("CHARGE"))
+				&& Integer.toString(transaction.getTransactionDay()).matches(validDay)
+				&& Integer.toString(transaction.getTransactionMonth()).matches(validMonth)
+				&& Integer.toString(transaction.getTransactionYear()).matches(validYear)) {
 			return true;
-		else
+		} else {
+			System.out.println("+++++++++++++");
+			System.out.println(transaction.getTransactionYear());
 			return false;
+		}
 	}
 
 	/**
