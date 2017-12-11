@@ -15,10 +15,12 @@ public class Billing {
 	public static double calculateBalance(Transaction[] transactions) {
 		double total = 0;
 		for (int i = 0; i < transactions.length; i++) {
-			if (transactions[i].getType().equals("PAYMENT")) {
-				total += transactions[i].getAmount();
-			} else {
-				total -= transactions[i].getAmount();
+			if (transactions[i] != null) {
+				if (transactions[i].getType().equals("PAYMENT")) {
+					total -= transactions[i].getAmount();
+				} else {
+					total += transactions[i].getAmount();
+				}
 			}
 		}
 
@@ -124,7 +126,7 @@ public class Billing {
 
 		// Matriculation fee - one time charge derived from lack of historical
 		// charges
-		if (findHistoricalTransaction(SR.getTransactions(), EnumFee.MATRICULATION) != null) {
+		if (findHistoricalTransaction(SR.getTransactions(), EnumFee.MATRICULATION) == null) {
 			chargeList.add(new Transaction("CHARGE", month, day, year, Fee.getFeeAmount(EnumFee.MATRICULATION),
 					Fee.getFeeNote(EnumFee.MATRICULATION)));
 		}
@@ -272,10 +274,8 @@ public class Billing {
 							Fee.getFeeNote(EnumFee.PT_GRAD__HEALTH_CENTER_6_TO_8_HOURS)));
 				}
 			}
-
-			// TODO: Online courses????
-		} else if (user.getClass().equals("FRESHMAN") || user.getClass().equals("SOPHOMORE")
-				|| user.getClass().equals("JUNIOR") || user.getClass().equals("SENIOR")) { // If
+		} else if (user.getRecord().getClassStatus().equals("FRESHMAN") || user.getRecord().getClassStatus().equals("SOPHOMORE")
+				|| user.getRecord().getClassStatus().equals("JUNIOR") || user.getRecord().getClassStatus().equals("SENIOR")) { // If
 																							// undergrad
 																							// student
 			if (numHours >= 12) {

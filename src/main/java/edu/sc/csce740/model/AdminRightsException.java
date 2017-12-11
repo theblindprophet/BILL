@@ -11,4 +11,8 @@ public class AdminRightsException extends Exception {
 	 */
 	public AdminRightsException() {
 	}
+	
+	public AdminRightsException(String message) {
+		super("ACTION NOT ALLOWED. " + message);
+	}	
 }

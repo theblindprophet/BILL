@@ -3,7 +3,7 @@ package main.java.edu.sc.csce740.model;
 /*
  * Fee class: used for represeting all the fees a student could have
  */
-final class Fee {
+public final class Fee {
 	/*
 	 * FEE NOTES
 	 */

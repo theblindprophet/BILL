@@ -6,6 +6,11 @@
 
 package main.java.edu.sc.csce740.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 /*
  * Bill Class: class for representing the Bill data type
  */
@@ -114,5 +119,10 @@ public class Bill {
 		this.transactions = transactions;
 		this.balance = Billing.calculateBalance(transactions);
 	}
-
+	public String toString() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(gson.toJson(this));
+		return gson.toJson(je);
+	}
 }

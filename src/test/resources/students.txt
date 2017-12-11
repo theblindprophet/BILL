@@ -1,1 +1,955 @@
-[{"student":{"id":"mhunt","firstName":"Michelle","lastName":"Hunt","phone":"999-999-9999","emailAddress":"mhunt@mailbox.sc.edu","addressStreet":"221B Baker St.","addressCity":"Pittsburgh","addressState":"PA","addressPostalCode":"26505"},"college":"ARTS_AND_SCIENCES","termBegan":{"semester":"FALL","year":2016},"classStatus":"PHD","gradAssistant":true,"international":false,"internationalStatus":"NONE","resident":false,"activeDuty":false,"veteran":false,"freeTuition":false,"scholarship":"NONE","studyAbroad":"NONE","nationalStudentExchange":false,"outsideInsurance":false,"courses":[{"name":"Naptime","id":"NAP 734","numCredits":4,"online":false},{"name":"History of Napping","id":"ART HISTORY 725","numCredits":4,"online":false},{"name":"Sleepy Dancing","id":"DANCE 577","numCredits":4,"online":false}],"transactions":[{"type":"PAYMENT","transactionDate":{"month":9,"day":10,"year":2016},"amount":2000.0,"note":""},{"type":"CHARGE","transactionDate":{"month":12,"day":15,"year":2016},"amount":2000.0,"note":"Final total Fall 2016"},{"type":"PAYMENT","transactionDate":{"month":1,"day":10,"year":2017},"amount":100.0,"note":"Return for fee miscalculation"},{"type":"PAYMENT","transactionDate":{"month":1,"day":15,"year":2017},"amount":1900.0,"note":""},{"type":"CHARGE","transactionDate":{"month":5,"day":15,"year":2017},"amount":2000.0,"note":"Final total Spring 2016"}]},{"student":{"id":"ggay","firstName":"Apples","lastName":"Limes","phone":"222-222-2222","emailAddress":"jamie@jamie.com","addressStreet":"111 Main St","addressCity":"Columbia","addressState":"NC","addressPostalCode":"29201"},"college":"ENGINEERING_AND_COMPUTING","termBegan":{"semester":"FALL","year":2016},"classStatus":"JUNIOR","gradAssistant":false,"international":false,"internationalStatus":"SPONSORED","resident":false,"activeDuty":false,"veteran":false,"freeTuition":false,"scholarship":"SIMS","studyAbroad":"NONE","nationalStudentExchange":false,"outsideInsurance":false,"courses":[{"name":"Apples Apples Apples","id":"CSCE","numCredits":3,"online":false}],"transactions":[]},{"student":{"id":"jgross","firstName":"Jamie","lastName":"Gross","phone":"222-222-2222","emailAddress":"jlgross@email.sc.edu","addressStreet":"111 Main St.","addressCity":"Columbia","addressState":"SC","addressPostalCode":"29201"},"college":"ENGINEERING_AND_COMPUTING","termBegan":{"semester":"FALL","year":2015},"classStatus":"SENIOR","gradAssistant":false,"international":false,"internationalStatus":"NONE","resident":false,"activeDuty":false,"veteran":false,"freeTuition":false,"scholarship":"NONE","studyAbroad":"NONE","nationalStudentExchange":false,"outsideInsurance":false,"courses":[{"name":"Scuba Diving","id":"PEDU 121","numCredits":1,"online":false},{"name":"Rock Climbing","id":"PEDU 149","numCredits":1,"online":false},{"name":"Game Development","id":"MART 581","numCredits":3,"online":false}],"transactions":[{"type":"PAYMENT","transactionDate":{"month":9,"day":17,"year":2015},"amount":2100.0,"note":""},{"type":"CHARGE","transactionDate":{"month":12,"day":2,"year":2015},"amount":2050.0,"note":"Final total Fall 2016"},{"type":"PAYMENT","transactionDate":{"month":2,"day":8,"year":2016},"amount":300.0,"note":"Return for fee miscalculation"},{"type":"PAYMENT","transactionDate":{"month":9,"day":15,"year":2016},"amount":1901.0,"note":""},{"type":"CHARGE","transactionDate":{"month":5,"day":15,"year":2017},"amount":2300.0,"note":"Final total Spring 2016"}]},{"student":{"id":"kwooten","firstName":"Kayleee","lastName":"Wooten","phone":"555-555-5555","emailAddress":"kwooten@mailbox.sc.edu","addressStreet":"1600 White House Rd.","addressCity":"Washington","addressState":"DC","addressPostalCode":"10101"},"college":"ARTS_AND_SCIENCES","termBegan":{"semester":"FALL","year":2017},"classStatus":"FRESHMAN","gradAssistant":false,"international":false,"internationalStatus":"NONE","resident":false,"activeDuty":false,"veteran":false,"freeTuition":false,"scholarship":"WOODROW","studyAbroad":"REGULAR","nationalStudentExchange":false,"outsideInsurance":true,"courses":[{"name":"Intro to Computer Science","id":"CSCE 101","numCredits":3,"online":false},{"name":"Underwater Basket Weaving","id":"STUFF 150","numCredits":3,"online":false},{"name":"Algorithmic Design I","id":"CSCE 145","numCredits":3,"online":false},{"name":"Statistics","id":"STAT 215","numCredits":4,"online":false}],"transactions":[{"type":"PAYMENT","transactionDate":{"month":9,"day":10,"year":2017},"amount":2000.0,"note":""},{"type":"CHARGE","transactionDate":{"month":12,"day":15,"year":2017},"amount":2340.0,"note":"Final total Fall 2016"},{"type":"PAYMENT","transactionDate":{"month":12,"day":16,"year":2017},"amount":1001.0,"note":"Return for fee miscalculation"},{"type":"PAYMENT","transactionDate":{"month":12,"day":17,"year":2017},"amount":1300.0,"note":""},{"type":"CHARGE","transactionDate":{"month":12,"day":21,"year":2017},"amount":2030.0,"note":"Final total Spring 2016"}]}]
+[
+  {
+    "student": {
+      "id": "mhunt",
+      "firstName": "Michelle",
+      "lastName": "Hunt",
+      "phone": "999-999-9999",
+      "emailAddress": "mhunt@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ARTS_AND_SCIENCES",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "PHD",
+    "gradAssistant": true,
+    "international": false,
+    "internationalStatus": "NONE",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "NONE",
+    "nationalStudentExchange": false,
+    "outsideInsurance": false,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 4,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 4,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 4,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 9,
+          "day": 10,
+          "year": 2016
+        },
+        "amount": 2000,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 15,
+          "year": 2016
+        },
+        "amount": 2000,
+        "note": "Final total Fall 2016"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 1,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 100,
+        "note": "Return for fee miscalculation"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 1,
+          "day": 15,
+          "year": 2017
+        },
+        "amount": 1900,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 5,
+          "day": 15,
+          "year": 2017
+        },
+        "amount": 2000,
+        "note": "Final total Spring 2016"
+      }
+    ]
+  },
+  {
+    "student": {
+      "id": "ggay",
+      "firstName": "Apples",
+      "lastName": "Limes",
+      "phone": "222-222-2222",
+      "emailAddress": "jamie@jamie.com",
+      "addressStreet": "111 Main St",
+      "addressCity": "Columbia",
+      "addressState": "NC",
+      "addressPostalCode": "29201"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "JUNIOR",
+    "gradAssistant": false,
+    "international": false,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "SIMS",
+    "studyAbroad": "NONE",
+    "nationalStudentExchange": false,
+    "outsideInsurance": false,
+    "courses": [
+      {
+        "name": "Apples Apples Apples",
+        "id": "CSCE",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      
+    ]
+  },
+  {
+    "student": {
+      "id": "jgross",
+      "firstName": "Jamie",
+      "lastName": "Gross",
+      "phone": "222-222-2222",
+      "emailAddress": "jlgross@email.sc.edu",
+      "addressStreet": "111 Main St.",
+      "addressCity": "Columbia",
+      "addressState": "SC",
+      "addressPostalCode": "29201"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2015
+    },
+    "classStatus": "SENIOR",
+    "gradAssistant": false,
+    "international": false,
+    "internationalStatus": "NONE",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "NONE",
+    "nationalStudentExchange": false,
+    "outsideInsurance": false,
+    "courses": [
+      {
+        "name": "Scuba Diving",
+        "id": "PEDU 121",
+        "numCredits": 1,
+        "online": false
+      },
+      {
+        "name": "Rock Climbing",
+        "id": "PEDU 149",
+        "numCredits": 1,
+        "online": false
+      },
+      {
+        "name": "Game Development",
+        "id": "MART 581",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 9,
+          "day": 17,
+          "year": 2015
+        },
+        "amount": 2100,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 2,
+          "year": 2015
+        },
+        "amount": 2050,
+        "note": "Final total Fall 2016"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 2,
+          "day": 8,
+          "year": 2016
+        },
+        "amount": 300,
+        "note": "Return for fee miscalculation"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 9,
+          "day": 15,
+          "year": 2016
+        },
+        "amount": 1901,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 5,
+          "day": 15,
+          "year": 2017
+        },
+        "amount": 2300,
+        "note": "Final total Spring 2016"
+      }
+    ]
+  },
+  {
+    "student": {
+      "id": "kwooten",
+      "firstName": "Kayleee",
+      "lastName": "Wooten",
+      "phone": "555-555-5555",
+      "emailAddress": "kwooten@mailbox.sc.edu",
+      "addressStreet": "1600 White House Rd.",
+      "addressCity": "Washington",
+      "addressState": "DC",
+      "addressPostalCode": "10101"
+    },
+    "college": "ARTS_AND_SCIENCES",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2017
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": false,
+    "internationalStatus": "NONE",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "WOODROW",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Intro to Computer Science",
+        "id": "CSCE 101",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Underwater Basket Weaving",
+        "id": "STUFF 150",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Algorithmic Design I",
+        "id": "CSCE 145",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Statistics",
+        "id": "STAT 215",
+        "numCredits": 4,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 9,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 2000,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 15,
+          "year": 2017
+        },
+        "amount": 2340,
+        "note": "Final total Fall 2016"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 12,
+          "day": 16,
+          "year": 2017
+        },
+        "amount": 1001,
+        "note": "Return for fee miscalculation"
+      },
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 12,
+          "day": 17,
+          "year": 2017
+        },
+        "amount": 1300,
+        "note": ""
+      },
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 21,
+          "year": 2017
+        },
+        "amount": 2030,
+        "note": "Final total Spring 2016"
+      }
+    ]
+  },
+  {
+    "student": {
+      "id": "grad1",
+      "firstName": "FIRST_grad1",
+      "lastName": "LAST_grad1",
+      "phone": "999-999-9999",
+      "emailAddress": "grad1@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "MASTERS",
+    "gradAssistant": false,
+    "international": false,
+    "internationalStatus": "NONE",
+    "resident": true,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "COHORT",
+    "nationalStudentExchange": false,
+    "outsideInsurance": false,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Anotha1",
+        "id": "ANTH 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Anotha1",
+        "id": "ANTH 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Anotha1",
+        "id": "ANTH 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Anotha1",
+        "id": "ANTH 577",
+        "numCredits": 3,
+        "online": false
+      }                  
+    ],
+    "transactions": [
+      {
+        "type": "PAYMENT",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 1300,
+        "note": "Bill payment"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "grad2",
+      "firstName": "FIRST_grad2",
+      "lastName": "LAST_grad2",
+      "phone": "999-999-9999",
+      "emailAddress": "grad2@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "PHD",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": true
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad1",
+      "firstName": "FIRST_ugrad1",
+      "lastName": "LAST_ugrad1",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad1@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": true,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad2",
+      "firstName": "FIRST_ugrad2",
+      "lastName": "LAST_ugrad2",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad2@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "SENIOR",
+    "gradAssistant": false,
+    "international": false,
+    "internationalStatus": "NONE",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "NONE",
+    "studyAbroad": "COHORT",
+    "nationalStudentExchange": false,
+    "outsideInsurance": false,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": true
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad3",
+      "firstName": "FIRST_ugrad3",
+      "lastName": "LAST_ugrad3",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad3@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "WOODROW",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad4",
+      "firstName": "FIRST_ugrad4",
+      "lastName": "LAST_ugrad4",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad4@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "ATHLETIC",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad5",
+      "firstName": "FIRST_ugrad5",
+      "lastName": "LAST_ugrad5",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad5@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "DEPARTMENTAL",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad6",
+      "firstName": "FIRST_ugrad6",
+      "lastName": "LAST_ugrad6",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad6@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "GENERAL",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  },
+  {
+    "student": {
+      "id": "ugrad7",
+      "firstName": "FIRST_ugrad7",
+      "lastName": "LAST_ugrad7",
+      "phone": "999-999-9999",
+      "emailAddress": "ugrad7@mailbox.sc.edu",
+      "addressStreet": "221B Baker St.",
+      "addressCity": "Pittsburgh",
+      "addressState": "PA",
+      "addressPostalCode": "26505"
+    },
+    "college": "ENGINEERING_AND_COMPUTING",
+    "termBegan": {
+      "semester": "FALL",
+      "year": 2016
+    },
+    "classStatus": "FRESHMAN",
+    "gradAssistant": false,
+    "international": true,
+    "internationalStatus": "SPONSORED",
+    "resident": false,
+    "activeDuty": false,
+    "veteran": false,
+    "freeTuition": false,
+    "scholarship": "SIMS",
+    "studyAbroad": "REGULAR",
+    "nationalStudentExchange": false,
+    "outsideInsurance": true,
+    "courses": [
+      {
+        "name": "Naptime",
+        "id": "NAP 734",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "History of Napping",
+        "id": "ART HISTORY 725",
+        "numCredits": 3,
+        "online": false
+      },
+      {
+        "name": "Sleepy Dancing",
+        "id": "DANCE 577",
+        "numCredits": 3,
+        "online": false
+      }
+    ],
+    "transactions": [
+      {
+        "type": "CHARGE",
+        "transactionDate": {
+          "month": 12,
+          "day": 10,
+          "year": 2017
+        },
+        "amount": 80,
+        "note": "MATRICULATION"
+      }    
+    ]
+  }               
+]

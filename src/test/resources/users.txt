@@ -68,5 +68,96 @@
         "lastName": "Trump",
         "role": "ADMIN",
         "college": "ARTS_AND_SCIENCES"
-    }
+    },
+    {
+        "id": "grad1",
+        "firstName": "FIRST_grad1",
+        "lastName": "LAST_grad1",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "grad2",
+        "firstName": "FIRST_grad2",
+        "lastName": "LAST_grad2",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+            {
+        "id": "grad3",
+        "firstName": "FIRST_grad3",
+        "lastName": "LAST_grad3",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "grad4",
+        "firstName": "FIRST_grad4",
+        "lastName": "LAST_grad4",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "grad5",
+        "firstName": "FIRST_grad5",
+        "lastName": "LAST_grad5",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "grad6",
+        "firstName": "FIRST_grad6",
+        "lastName": "LAST_grad6",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad1",
+        "firstName": "FIRST_ugrad1",
+        "lastName": "LAST_ugrad1",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad2",
+        "firstName": "FIRST_ugrad2",
+        "lastName": "LAST_ugrad2",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad3",
+        "firstName": "FIRST_ugrad3",
+        "lastName": "LAST_ugrad3",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad4",
+        "firstName": "FIRST_ugrad4",
+        "lastName": "LAST_ugrad4",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad5",
+        "firstName": "FIRST_ugrad5",
+        "lastName": "LAST_ugrad5",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad6",
+        "firstName": "FIRST_ugrad6",
+        "lastName": "LAST_ugrad6",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad7",
+        "firstName": "FIRST_ugrad7",
+        "lastName": "LAST_ugrad7",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    }                   
 ]

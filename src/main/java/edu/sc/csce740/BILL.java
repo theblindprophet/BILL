@@ -112,7 +112,7 @@ public class BILL implements BILLIntf {
 		} catch (InvalidUserIdException e) {
 			throw new InvalidUserIdException();
 		} catch (Exception e) {
-			System.out.println("Exception in logIn: " + e.getMessage());
+			System.out.println("BILL API message: Exception in logIn: " + e.getMessage());
 		}
 	}
 
@@ -133,9 +133,9 @@ public class BILL implements BILLIntf {
 				throw new InvalidUserIdException();
 			}
 		} catch (InvalidUserIdException e) {
-			System.out.println("No user logged in");
+			System.out.println("BILL API message: Attempted to log out, but the supplied userID was either invalid or not logged-in.");
 		} catch (Exception e) {
-			System.out.println("Exception in logOut: " + e.getMessage());
+			System.out.println("BILL API message: Exception in logOut: " + e.getMessage());
 		}
 	}
 
@@ -177,7 +177,7 @@ public class BILL implements BILLIntf {
 			System.out.println(_DHCS.getCurrentUser().getId() + " is not an admin");
 			throw new AdminRightsException();
 		} catch (Exception e) {
-			System.out.println("Exception in getStudentIDs: " + e.getMessage());
+			System.out.println("BILL API message: Exception in getStudentIDs: " + e.getMessage());
 			throw new Exception();
 		}
 	}
@@ -202,11 +202,11 @@ public class BILL implements BILLIntf {
 				throw new GetRecordException();
 			}
 		} catch (GetRecordException e) {
-			System.out.println("userID '" + _DHCS.getCurrentUser().getId()
+			System.out.println("BILL API message: userID '" + _DHCS.getCurrentUser().getId()
 					+ "' does not have the appropriate privileges to getRecord for userId '" + userId + "'");
 			throw new GetRecordException();
 		} catch (Exception e) {
-			System.out.println("Exception in getRecord: " + e.getMessage());
+			System.out.println("BILL API message: Exception in getRecord: " + e.getMessage());
 			throw new Exception();
 		}
 	}
@@ -236,11 +236,11 @@ public class BILL implements BILLIntf {
 				throw new AdminRightsException();
 			}
 		} catch (AdminRightsException e) {
-			System.out.println("userID '" + _DHCS.getCurrentUser().getId()
+			System.out.println("BILL API message: userID '" + _DHCS.getCurrentUser().getId()
 					+ "' does not have the appropriate privileges to editRecord for userId '" + userId + "'");
 			throw new AdminRightsException();
 		} catch (EditRecordException e) {
-			System.out.println("Exception in editRecord: " + e.getMessage());
+			System.out.println("BILL API message: Exception in editRecord: " + e.getMessage());
 			throw new EditRecordException("Edit Record error: " + e.getMessage());
 		}
 	}
@@ -259,17 +259,13 @@ public class BILL implements BILLIntf {
 
 		try {
 			User requestee = _DHCS.getUser(userId);
-
 			if (AVPS.hasPermission(_DHCS.getCurrentUser(), requestee, Action.GenerateBill)) {
 				bill = Billing.getBill(requestee);
 			} else {
-				System.out.println("userID '" + _DHCS.getCurrentUser().getId()
-						+ "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");
-				throw new AdminRightsException();
+				throw new AdminRightsException("userID '" + userId + "' does not have the appropriate privileges to generateBill for userId '" + userId + "'");
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occurred in generateBill: " + e.getMessage());
-			throw new Exception(e);
+			System.out.println("BILL API message: Exception occurred in generateBill: " + e.getMessage());
 		}
 		return bill;
 	}
@@ -307,12 +303,12 @@ public class BILL implements BILLIntf {
 				Bill charges = new Bill(record.getStudent(), record.getCollege(), record.getClassStatus(), transArray);
 				return charges;
 			} else {
-				System.out.println("userID '" + _DHCS.getCurrentUser().getId()
+				System.out.println("BILL API message: userID '" + _DHCS.getCurrentUser().getId()
 						+ "' does not have the appropriate privileges to viewCharges for userId '" + userId + "'");
 				throw new AdminRightsException();
 			}
 		} catch (AdminRightsException e) {
-			System.out.println("Error occurred in view charges: " + e.getMessage());
+			System.out.println("BILL API message: Error occurred in view charges: " + e.getMessage());
 			throw new AdminRightsException();
 		}
 	}
@@ -337,14 +333,14 @@ public class BILL implements BILLIntf {
 				StudentRecord record = _DHCS.getRecord(userId);
 				Billing.applyPayment(record, amount, note);
 			} else {
-				System.out.println("userID '" + _DHCS.getCurrentUser().getId()
+				System.out.println("BILL API message: userID '" + _DHCS.getCurrentUser().getId()
 						+ "' does not have the appropriate privileges to viewCharges for userId '" + userId + "'");
 				throw new AdminRightsException();
 			}
 		} catch (AdminRightsException e) {
 			throw new AdminRightsException();
 		} catch (InvalidPaymentException e) {
-			System.out.println("Error occurred in view charges: " + e.getMessage());
+			System.out.println("BILL API message: Error occurred in view charges: " + e.getMessage());
 			throw new InvalidPaymentException();
 		}
 	}
