@@ -22,6 +22,10 @@ import main.java.edu.sc.csce740.model.Course;
 import main.java.edu.sc.csce740.model.InvalidUserIdException;
 import main.java.edu.sc.csce740.model.AdminRightsException;
 import main.java.edu.sc.csce740.model.Bill;
+import main.java.edu.sc.csce740.model.User;
+import main.java.edu.sc.csce740.model.Fee;
+import main.java.edu.sc.csce740.model.EnumFee;
+import main.java.edu.sc.csce740.model.Transaction;
 import main.java.edu.sc.csce740.model.GetRecordException;
 import main.java.edu.sc.csce740.model.EditRecordException;
 import main.java.edu.sc.csce740.model.InvalidPaymentException;
@@ -100,6 +104,21 @@ public class BILLTest {
 		String id = testerClass.getUser();
 		assertEquals("mhunt", id);
 	}
+	
+	/**
+	 * Test that a user can be simply edited
+	 * 
+	 * @result user is returned correctly
+	 */
+	@Test
+	public void testEditUser() {
+		User aUser = new User();
+		aUser.setCollege("ENGINEERING_AND_COMPUTING");
+		aUser.setFirstname("Bruh");
+		aUser.setLastname("Limes");
+		aUser.setId("apples");
+		aUser.setRole("STUDENT");
+	}
 
 	/**
 	 * Test that an admin can obtain correct user ids
@@ -167,6 +186,80 @@ public class BILLTest {
 			assertEquals(2016, testStudent.getTermBegan().getYear());
 		} catch (GetRecordException e) {
 			fail("Fail: GetRecordException.");
+		} catch (Exception e) {
+			fail("Fail: Exception.");
+		}
+	}
+	
+	/**
+	 * Test that a record can be simply edited
+	 * 
+	 * @result student record is obtained with no errors and edited
+	 */
+	@Test
+	public void editRecordNoWrite() {
+		// Login
+		try {
+			testerClass.logIn("rbob");
+		} catch (InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			StudentRecord testStudent = testerClass.getRecord("ggay");
+			testStudent.setActiveDuty(true);
+			testStudent.setClassStatus("JUNIOR");
+			testStudent.setCollege("ARTS_AND_SCIENCES");
+			testStudent.setGradAssistant(false);
+			testStudent.setVeteran(false);
+			testStudent.setInternational(true);
+			testStudent.setResident(true);
+			testStudent.setFreeTuition(false);
+			testStudent.setNationalStudentExchange(false);
+			testStudent.setOutsideInsurance(true);
+			Term aTerm = new Term();
+			aTerm.setSemester("FALL");
+			aTerm.setYear(2016);
+			testStudent.setCapstoneEnrolled(aTerm);
+			Transaction[] trans = testStudent.getTransactionPeriod(7, 7, 2016, 11, 11, 2017);
+			assertTrue(testStudent.toString().contains("ARTS_AND_SCIENCES"));
+		} catch (GetRecordException e) {
+			fail("Fail: GetRecordException.");
+		} catch (Exception e) {
+			fail("Fail: Exception.");
+		}
+	}
+	
+	/**
+	 * Test that a term can be simply edited
+	 * 
+	 * @result term is edited
+	 */
+	@Test
+	public void editTermNoWrite() {
+		// Login
+		try {
+			testerClass.logIn("rbob");
+		} catch (InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			Term aTerm = new Term();
+			aTerm.setSemester("FALL");
+			aTerm.setYear(2016);
+			Term bTerm = new Term();
+			bTerm.setSemester("SPRING");
+			bTerm.setYear(2014);
+			assertEquals(aTerm.termDifference(bTerm), -8);
+			aTerm.setYear(2012);
+			assertEquals(aTerm.termDifference(bTerm), 4);
+			aTerm.setSemester("SUMMER");
+			assertEquals(aTerm.termDifference(bTerm), 5);
+			aTerm.setSemester("SPRING");
+			assertEquals(aTerm.termDifference(bTerm), 6);
+			bTerm.setSemester("SUMMER");
+			assertEquals(aTerm.termDifference(bTerm), 7);
+			bTerm.setSemester("FALL");
+			assertEquals(aTerm.termDifference(bTerm), 8);
 		} catch (Exception e) {
 			fail("Fail: Exception.");
 		}
@@ -253,20 +346,6 @@ public class BILLTest {
 	}
 
 	/**
-	 * Test that a record is updated with correct values
-	 * 
-	 * @result student record is updated with correct values
-	 */
-	@Test
-	public void testEditRecordInvalidValues() {
-		this.testEditRecordInvalid("state", "Edit Record error: Not valid address state");
-		testerClass.logOut();
-		this.testEditRecordInvalid("phone", "Edit Record error: phone does not match correct pattern");
-		testerClass.logOut();
-		this.testEditRecordInvalid("scholarship", "Edit Record error: Not valid scholarship");
-	}
-
-	/**
 	 * This function is used for testing student record in various ways
 	 * depending on the parameters Edit record
 	 * 
@@ -348,6 +427,22 @@ public class BILLTest {
 			}
 		}
 	}
+	
+	/**
+	 * Test that a record is updated with correct values
+	 * 
+	 * @result student record is updated with correct values
+	 */
+	@Test
+	public void testEditRecordInvalidValues() {
+		this.testEditRecordInvalid("id", "Edit Record error: Null Id");
+		testerClass.logOut();
+		this.testEditRecordInvalid("state", "Edit Record error: Not valid address state");
+		testerClass.logOut();
+		this.testEditRecordInvalid("phone", "Edit Record error: phone does not match correct pattern");
+		testerClass.logOut();
+		this.testEditRecordInvalid("scholarship", "Edit Record error: Not valid scholarship");
+	}
 
 	/**
 	 * Edit record with invalid value
@@ -369,7 +464,11 @@ public class BILLTest {
 		Term testStudentTermBegan = new Term();
 		Course[] testStudentCourses = new Course[1];
 		try {
-			testStudentStudent.setId("ggay");
+			if (value == "id") {
+				testStudentStudent.setId(null);
+			} else {
+				testStudentStudent.setId("ggay");
+			}
 			testStudentStudent.setFirstname("Apples");
 			testStudentStudent.setLastname("Limes");
 			testStudentStudent.setEmailAddress("jamie@jamie.com");
@@ -486,7 +585,7 @@ public class BILLTest {
 	public void testApplyPaymentInvalidPrice() {
 		// Login
 		try {
-			testerClass.logIn("ggay");
+			testerClass.logIn("jgross");
 		} catch (InvalidUserIdException e) {
 			fail("Fail: InvalidUserIdException.");
 		}
@@ -571,6 +670,30 @@ public class BILLTest {
 			fail("Fail: Exception.");
 		}
 	}
+	
+	/**
+	 * Make sure we can simply edit a transaction object
+	 */
+	@Test
+	public void testEditTransactionNoWrite() {
+		// Login
+		try {
+			testerClass.logIn("mhunt");
+		} catch (InvalidUserIdException e) {
+			fail("Fail: InvalidUserIdException.");
+		}
+		try {
+			Bill charges = testerClass.viewCharges("mhunt", 10, 16, 2016, 5, 1, 2018);
+			Transaction[] trans = charges.getTransactions();
+			trans[0].setAmount(3000);
+			trans[0].setTransactionDay(3);
+			trans[0].setNote("Just another notes");
+		} catch (AdminRightsException e) {
+			fail("Fail: AdminRightsException.");
+		} catch (Exception e) {
+			fail("Fail: Exception.");
+		}
+	}
 
 	/**
 	 * View charges for user that logged in student user does not have
@@ -607,6 +730,24 @@ public class BILLTest {
 			testerClass.generateBill("mhunt");
 		} catch(Exception e) {
 			fail("Fail: mhunt should be able to generate bill for mhunt.");
+		}
+	}
+	
+	@Test
+	public void testEditCourse() {
+		Course aCourse = new Course();
+		aCourse.setOnline(true);
+		assertTrue(aCourse.isOnline());
+		aCourse.setName("Jamie");
+		aCourse.setNumCredits(3);
+		assertEquals(aCourse.toString(), "Jamie--3-true");
+	}
+	
+	@Test
+	public void testFees() {
+		for (EnumFee e : EnumFee.values()) {
+			Fee.getFeeAmount(e);
+			Fee.getFeeNote(e);
 		}
 	}
 

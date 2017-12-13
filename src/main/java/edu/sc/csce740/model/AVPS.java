@@ -298,7 +298,6 @@ public class AVPS {
 				&& Integer.toString(transaction.getTransactionYear()).matches(validYear)) {
 			return true;
 		} else {
-			System.out.println("+++++++++++++");
 			System.out.println(transaction.getTransactionYear());
 			return false;
 		}

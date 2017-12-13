@@ -58,27 +58,28 @@ public class Term {
 		int currYear = this.year;
 
 		if (!term.getSemester().equals("") && !this.semester.equals("")) {
-			while (currYear != term.getYear() && !currSemester.equals(term.getSemester())) {
+			while (currYear != term.getYear()) {
 
-				if (currYear < term.getYear()) { // If term difference is
-													// positive
-					termDiff++;
-					if (currSemester.equals("FALL")) {
-						currSemester = "SPRING";
-						currYear++;
-					} else if (currSemester.equals("SPRING")) {
-						currSemester = "FALL";
-					}
+				if (currYear < term.getYear()) { // Pos difference
+					termDiff+=3;
+					currYear++;
 				} else { // If term difference is negative
-					termDiff--;
-
-					if (currSemester.equals("FALL")) {
-						currSemester = "SPRING";
-					} else if (currSemester.equals("SPRING")) {
-						currSemester = "FALL";
-						currYear--;
-					}
+					termDiff-=3;
+					currYear--;
 				}
+			}
+			if (currSemester.equals("FALL") && term.getSemester().equals("SPRING")) {
+				termDiff-=2;
+			} else if (currSemester.equals("FALL") && term.getSemester().equals("SUMMER")) {
+				termDiff-=1;
+			} else if (currSemester.equals("SPRING") && term.getSemester().equals("SUMMER")) {
+				termDiff+=1;
+			} else if (currSemester.equals("SPRING") && term.getSemester().equals("FALL")) {
+				termDiff+=2;
+			} else if (currSemester.equals("SUMMER") && term.getSemester().equals("FALL")) {
+				termDiff+=1;
+			} else if (currSemester.equals("SUMMER") && term.getSemester().equals("SPRING")) {
+				termDiff-=1;
 			}
 		}
 
