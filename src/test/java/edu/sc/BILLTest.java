@@ -119,6 +119,31 @@ public class BILLTest {
 		aUser.setId("apples");
 		aUser.setRole("STUDENT");
 	}
+	
+	
+	/**
+	 * Test that a bill can be simply edited
+	 * 
+	 * @result user is returned correctly
+	 */
+	@Test
+	public void testEditBill() {
+		Bill aBill = new Bill();
+		aBill.setClassStatus("FRESHMAN");
+		aBill.setCollege("ENGINEERING_AND_COMPUTING");
+		StudentRecord testStudent;
+		try {
+			testerClass.logIn("ggay");
+			testStudent = testerClass.getRecord("ggay");
+			aBill.setStudent(testStudent.getStudent());
+			Transaction[] trans = testStudent.getTransactionPeriod(7, 7, 2016, 11, 11, 2017);
+			aBill.setTransactions(trans);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * Test that an admin can obtain correct user ids

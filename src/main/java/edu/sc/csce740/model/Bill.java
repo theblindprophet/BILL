@@ -23,6 +23,11 @@ public class Bill {
 	private Transaction[] transactions;
 	private double balance = 0.0;
 
+	
+	public Bill() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	/*
 	 * Constructor
 	 * 
@@ -46,6 +51,8 @@ public class Bill {
 	}
 
 	/*************** GETTERS AND SETTERS ****************/
+
+
 
 	/**
 	 * 

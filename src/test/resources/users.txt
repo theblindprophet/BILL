@@ -159,5 +159,47 @@
         "lastName": "LAST_ugrad7",
         "role": "STUDENT",
         "college": "ENGINEERING_AND_COMPUTING"
-    }                   
+    },
+    {
+        "id": "ugrad8",
+        "firstName": "FIRST_ugrad8",
+        "lastName": "LAST_ugrad8",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad9",
+        "firstName": "FIRST_ugrad9",
+        "lastName": "LAST_ugrad9",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad10",
+        "firstName": "FIRST_ugrad10",
+        "lastName": "LAST_ugrad10",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad10",
+        "firstName": "FIRST_ugrad10",
+        "lastName": "LAST_ugrad10",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad11",
+        "firstName": "FIRST_ugrad11",
+        "lastName": "LAST_ugrad11",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    },
+    {
+        "id": "ugrad12",
+        "firstName": "FIRST_ugrad12",
+        "lastName": "LAST_ugrad12",
+        "role": "STUDENT",
+        "college": "ENGINEERING_AND_COMPUTING"
+    }    
 ]

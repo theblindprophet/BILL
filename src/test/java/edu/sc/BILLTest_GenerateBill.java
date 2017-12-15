@@ -286,6 +286,110 @@ public class BILLTest_GenerateBill {
 		}
 	}		
 	
+	/**
+	 * 
+	 */
+	@Test
+	public void testCalculateCurrentCharges_ugrad8() {
+		// Attempt to get Bill.
+		Bill bill = attemptGenerateBill("ugrad8");
+		if (bill == null) fail();
+		
+		// Build list of expected charges for grad1
+		ArrayList<String> expFeeNotes = new ArrayList<String>();
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.UG_NONRESIDENT_SIMS_TUITION));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.TECHNOLOGY_FEE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_INSURANCE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_SPONSORED));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_ENROLLMENT));
+		
+		String missingCharges = containsCharges(expFeeNotes, bill.getTransactions());
+		System.out.println(bill.toString());
+		if (!missingCharges.equals("")) {
+			fail("\nMissing the following charges:\n" + missingCharges);
+		}
+	}		
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void testCalculateCurrentCharges_ugrad9() {
+		// Attempt to get Bill.
+		Bill bill = attemptGenerateBill("ugrad9");
+		if (bill == null) fail();
+		
+		// Build list of expected charges for grad1
+		ArrayList<String> expFeeNotes = new ArrayList<String>();
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.UG_NONRESIDENT_GENERAL_TUITION));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.TECHNOLOGY_FEE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_INSURANCE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_SPONSORED));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_ENROLLMENT));
+		
+		String missingCharges = containsCharges(expFeeNotes, bill.getTransactions());
+		System.out.println(bill.toString());
+		if (!missingCharges.equals("")) {
+			fail("\nMissing the following charges:\n" + missingCharges);
+		}
+	}		
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void testCalculateCurrentCharges_ugrad10() {
+		// Attempt to get Bill.
+		Bill bill = attemptGenerateBill("ugrad10");
+		if (bill == null) fail();
+		
+		// Build list of expected charges for grad1
+		ArrayList<String> expFeeNotes = new ArrayList<String>();
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.UG_NONRESIDENT_WOODROW_DEPARTMENTAL_TUITION));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.TECHNOLOGY_FEE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_INSURANCE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_SPONSORED));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_ENROLLMENT));
+		
+		String missingCharges = containsCharges(expFeeNotes, bill.getTransactions());
+		System.out.println(bill.toString());
+		if (!missingCharges.equals("")) {
+			fail("\nMissing the following charges:\n" + missingCharges);
+		}
+	}		
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void testCalculateCurrentCharges_ugrad12() {
+		// Attempt to get Bill.
+		Bill bill = attemptGenerateBill("ugrad12");
+		if (bill == null) fail();
+		
+		// Build list of expected charges for grad1
+		ArrayList<String> expFeeNotes = new ArrayList<String>();
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.UG_NONRESIDENT_ATHLETICS_TUITION));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.TECHNOLOGY_FEE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_INSURANCE));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD_EXCHANGE_DEPOSIT));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.STUDY_ABROAD));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_SPONSORED));
+		expFeeNotes.add(Fee.getFeeNote(EnumFee.INTERNATIONAL_ENROLLMENT));
+		
+		String missingCharges = containsCharges(expFeeNotes, bill.getTransactions());
+		System.out.println(bill.toString());
+		if (!missingCharges.equals("")) {
+			fail("\nMissing the following charges:\n" + missingCharges);
+		}
+	}		
+	
 	
 	private Bill attemptGenerateBill(String userID) {
 		Bill retrievedBill = null;

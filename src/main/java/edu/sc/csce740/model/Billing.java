@@ -338,7 +338,7 @@ public class Billing {
 						case "SIMS":
 							chargeList.add(new Transaction("CHARGE", month, day, year,
 									Fee.getFeeAmount(EnumFee.UG_NONRESIDENT_SIMS_TUITION),
-									Fee.getFeeNote(EnumFee.UG_NONRESIDENT_GENERAL_TUITION)));
+									Fee.getFeeNote(EnumFee.UG_NONRESIDENT_SIMS_TUITION)));
 							break;
 						}
 
@@ -400,7 +400,7 @@ public class Billing {
 						case "SIMS":
 							chargeList.add(new Transaction("CHARGE", month, day, year,
 									Fee.getFeeAmount(EnumFee.PT_UG_NONRESIDENT_SIMS_TUITION),
-									Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_GENERAL_TUITION)));
+									Fee.getFeeNote(EnumFee.PT_UG_NONRESIDENT_SIMS_TUITION)));
 							break;
 						}
 
